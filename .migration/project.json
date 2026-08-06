@@ -1,0 +1,10 @@
+{
+  "type": "doc",
+  "sites": {
+    "eds-ema-repo": {
+      "previewOrg": "inf73054",
+      "previewSite": "eds-ema-repo",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+    }
+  }
+}

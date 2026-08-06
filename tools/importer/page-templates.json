@@ -1,0 +1,148 @@
+{
+  "metadata": {
+    "projectType": "doc"
+  },
+  "templates": [
+    {
+      "name": "about-us",
+      "urls": [
+        "https://wknd-trendsetters.site/about-us"
+      ],
+      "representativeUrl": "https://wknd-trendsetters.site/about-us",
+      "coverageGaps": [],
+      "description": "Editorial landing page: image-led hero, featured case-study intro, image gallery, tabbed testimonials, article cards row, FAQ accordion, and dark closing CTA banner. Alternating light/white/dark section backgrounds.",
+      "blocks": [
+        {
+          "name": "hero-collage",
+          "instances": [
+            "#main-content > header.section.secondary-section > div.container > div.grid-layout"
+          ]
+        },
+        {
+          "name": "columns-article",
+          "instances": [
+            "#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout"
+          ]
+        },
+        {
+          "name": "cards-gallery",
+          "instances": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.grid-gap-sm"
+          ]
+        },
+        {
+          "name": "tabs-testimonial",
+          "instances": [
+            "#main-content > section.section:nth-of-type(3) div.tabs-wrapper"
+          ]
+        },
+        {
+          "name": "cards-article",
+          "instances": [
+            "#main-content > section.section.secondary-section:nth-of-type(4) > div.container > div.grid-layout.grid-gap-md"
+          ]
+        },
+        {
+          "name": "accordion-faq",
+          "instances": [
+            "#main-content > section.section:nth-of-type(5) div.faq-list"
+          ]
+        },
+        {
+          "name": "hero-banner",
+          "instances": [
+            "#main-content > section.section.inverse-section > div.container > div.grid-layout"
+          ]
+        },
+        {
+          "name": "section-inverse",
+          "instances": [
+            "#main-content > section.section.inverse-section"
+          ],
+          "section": "dark"
+        }
+      ],
+      "sections": [
+        {
+          "id": "s1",
+          "name": "Hero",
+          "selector": "#main-content > header.section.secondary-section",
+          "style": "grey",
+          "blocks": [
+            "hero-collage"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "s2",
+          "name": "Case study intro",
+          "selector": "#main-content > section.section:nth-of-type(1)",
+          "style": "light",
+          "blocks": [
+            "columns-article"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "s3",
+          "name": "Style in every snapshot",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(2)",
+          "style": "grey",
+          "blocks": [
+            "cards-gallery"
+          ],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) h2.h2-heading",
+            "#main-content > section.section.secondary-section:nth-of-type(2) p.paragraph-lg"
+          ]
+        },
+        {
+          "id": "s4",
+          "name": "Testimonials",
+          "selector": "#main-content > section.section:nth-of-type(3)",
+          "style": "light",
+          "blocks": [
+            "tabs-testimonial"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "s5",
+          "name": "Latest articles",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(4)",
+          "style": "grey",
+          "blocks": [
+            "cards-article"
+          ],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section:nth-of-type(4) h2.h2-heading",
+            "#main-content > section.section.secondary-section:nth-of-type(4) p.paragraph-lg"
+          ]
+        },
+        {
+          "id": "s6",
+          "name": "FAQ",
+          "selector": "#main-content > section.section:nth-of-type(5)",
+          "style": "light",
+          "blocks": [
+            "accordion-faq"
+          ],
+          "defaultContent": [
+            "#main-content > section.section:nth-of-type(5) h2",
+            "#main-content > section.section:nth-of-type(5) p"
+          ]
+        },
+        {
+          "id": "s7",
+          "name": "Closing CTA",
+          "selector": "#main-content > section.section.inverse-section",
+          "style": "dark",
+          "blocks": [
+            "hero-banner"
+          ],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}
