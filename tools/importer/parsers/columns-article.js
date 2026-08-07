@@ -7,8 +7,10 @@
  * Generated: 2026-08-05
  *
  * Structure (2-column columns variant, single content row):
- *   Cell 1: image (adventure-spots)
- *   Cell 2: breadcrumb (Home / Case studies), h2 heading, byline (By Taylor Brooks; June 12, 2024 • 4 min read)
+ *   Cell 1: image
+ *   Cell 2: all content-column elements in document order. This covers both
+ *     - about-us: breadcrumb (Home / Case studies), h2 heading, byline rows
+ *     - blog:     tag/date row, h2 heading, description paragraph, CTA button-group
  */
 export default function parse(element, { document }) {
   const columns = element.querySelectorAll(':scope > div');
@@ -18,15 +20,9 @@ export default function parse(element, { document }) {
   // --- Cell 1: image ---
   const image = imageColumn.querySelector('img');
 
-  // --- Cell 2: breadcrumb + heading + byline ---
-  const contentCell = [];
-  const breadcrumb = contentColumn.querySelector('.breadcrumbs');
-  if (breadcrumb) contentCell.push(breadcrumb);
-  const heading = contentColumn.querySelector('h1, h2, [class*="h2-heading"], [class*="heading"]');
-  if (heading) contentCell.push(heading);
-  // Byline blocks: the flex-horizontal rows containing author + date/read-time
-  const bylineRows = Array.from(contentColumn.querySelectorAll('.flex-horizontal'));
-  bylineRows.forEach((row) => contentCell.push(row));
+  // --- Cell 2: preserve every content-column child in order ---
+  // Generic: keeps breadcrumb/byline (about-us) AND tag/description/CTA (blog).
+  const contentCell = Array.from(contentColumn.children);
 
   // Empty-block guard
   if (!image && contentCell.length === 0) {

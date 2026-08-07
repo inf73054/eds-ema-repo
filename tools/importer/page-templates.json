@@ -143,6 +143,112 @@
           "defaultContent": []
         }
       ]
+    },
+    {
+      "name": "blog",
+      "urls": [
+        "https://wknd-trendsetters.site/blog"
+      ],
+      "representativeUrl": "https://wknd-trendsetters.site/blog",
+      "coverageGaps": [],
+      "description": "Blog index: hero (heading + CTAs + image), featured article (image + tag/date/heading/desc/CTA), Latest Articles cards grid (6 cards), and a lime accent CTA banner.",
+      "blocks": [
+        {
+          "name": "hero-collage",
+          "instances": ["#main-content > header.section.secondary-section > div.container > div.grid-layout"]
+        },
+        {
+          "name": "columns-article",
+          "instances": ["#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout"]
+        },
+        {
+          "name": "cards-article",
+          "instances": ["#main-content > section.section.secondary-section:nth-of-type(2) > div.container > div.grid-layout.grid-gap-md"]
+        },
+        {
+          "name": "section-accent",
+          "instances": ["#main-content > section.section.accent-section"],
+          "section": "accent"
+        }
+      ],
+      "sections": [
+        {
+          "id": "s1",
+          "name": "Hero",
+          "selector": "#main-content > header.section.secondary-section",
+          "style": "grey",
+          "blocks": ["hero-collage"],
+          "defaultContent": []
+        },
+        {
+          "id": "s2",
+          "name": "Featured article",
+          "selector": "#main-content > section.section:nth-of-type(1)",
+          "style": "light",
+          "blocks": ["columns-article"],
+          "defaultContent": []
+        },
+        {
+          "id": "s3",
+          "name": "Latest Articles",
+          "selector": "#main-content > section.section.secondary-section:nth-of-type(2)",
+          "style": "grey",
+          "blocks": ["cards-article"],
+          "defaultContent": [
+            "#main-content > section.section.secondary-section:nth-of-type(2) h2",
+            "#main-content > section.section.secondary-section:nth-of-type(2) p.paragraph-lg"
+          ]
+        },
+        {
+          "id": "s4",
+          "name": "Accent CTA",
+          "selector": "#main-content > section.section.accent-section",
+          "style": "accent",
+          "blocks": [],
+          "defaultContent": [
+            "#main-content > section.section.accent-section h2",
+            "#main-content > section.section.accent-section p"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "blog-article",
+      "urls": [
+        "https://wknd-trendsetters.site/blog/ace-pro-court-polo"
+      ],
+      "representativeUrl": "https://wknd-trendsetters.site/blog/ace-pro-court-polo",
+      "coverageGaps": [],
+      "outputPathRewrite": { "from": "/blog/", "to": "/blog-" },
+      "description": "Blog article: header (image + breadcrumb + h1 + byline + tag) and a long-form rich-text body (headings, paragraphs, list, blockquote, inline images) with a data table rendered as a Table block. Published as a top-level page (source /blog/<slug> flattened to /blog-<slug>, e.g. /blog-ace-pro-court-polo) to avoid colliding with the blog index page.",
+      "blocks": [
+        {
+          "name": "columns-article",
+          "instances": ["#main-content > section.section:nth-of-type(1) > div.container > div.grid-layout"]
+        },
+        {
+          "name": "table",
+          "instances": ["#main-content > section.section:nth-of-type(2) table"]
+        }
+      ],
+      "sections": [
+        {
+          "id": "s1",
+          "name": "Article header",
+          "selector": "#main-content > section.section:nth-of-type(1)",
+          "style": "light",
+          "blocks": ["columns-article"],
+          "defaultContent": []
+        },
+        {
+          "id": "s2",
+          "name": "Article body",
+          "selector": "#main-content > section.section:nth-of-type(2)",
+          "style": "light",
+          "blocks": ["table"],
+          "defaultContent": ["#main-content > section.section:nth-of-type(2) .blog-content"]
+        }
+      ]
     }
   ]
 }

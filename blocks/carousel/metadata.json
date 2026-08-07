@@ -1,0 +1,52 @@
+{
+  "variantName": "carousel",
+  "baseBlock": "carousel",
+  "version": "1.0.0",
+  "created": "2026-08-07T06:21:30.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/us/en.html",
+    "originPage": "WKND Adventures homepage (classic WKND, AEM Core Components)",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "image",
+    "density": "spacious",
+    "purpose": "hero-slideshow",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "per-slide row: image + (heading + description + CTA)",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "hero slideshows / rotating banners with a background image and overlaid text box per slide",
+      "image + heading + description + single CTA slides"
+    ],
+    "notSuitableFor": [
+      "static single-image heroes (use a hero block)",
+      "text-only slideshows without background imagery"
+    ]
+  },
+  "implementationNotes": {
+    "baseSource": "Block Collection carousel (sta-boilerplate)",
+    "docProjectAdaptations": [
+      "Removed moveInstrumentation import/call — helper does not exist in this doc project's scripts.js",
+      "Removed fetchPlaceholders dependency — not exported by this project's aem.js; aria-label/placeholder strings inlined as English defaults",
+      "Minimal CSS: white text box lower-left over full-bleed image, dot indicators, round prev/next controls",
+      "No _carousel.json model file — project type is 'doc' (modeling JSON only required for xwalk projects)"
+    ],
+    "contentModel": {
+      "rowsPerSlide": 1,
+      "columnsPerRow": 2,
+      "column1": "slide image",
+      "column2": "heading (h2) + description + CTA link"
+    }
+  },
+  "usage": {
+    "pagesUsing": ["/us/en"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-07T06:21:30.000Z"
+  }
+}

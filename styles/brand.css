@@ -1,32 +1,32 @@
 :root {
-  /* Typography */
-  --heading-font-family: "Syncopate", sans-serif;
-  --body-font-family: "Instrument Sans", sans-serif;
+  /* Typography — WKND Adventures */
+  --heading-font-family: "Asar", georgia, "Times New Roman", times, serif;
+  --body-font-family: "Source Sans Pro", "Helvetica Neue", helvetica, arial, sans-serif;
 
   /* Colors */
   --background-color: #fff;
-  --text-color: #000;
-  --link-color: #666;
+  --text-color: #202020;
+  --link-color: #202020;
   --link-hover-color: #000;
-  --light-color: #f5f5f5;
-  --dark-color: #000;
-  --accent-color: #f4fe8b;
-  --text-secondary-color: #666;
+  --light-color: #f7f7f7;
+  --dark-color: #202020;
+  --accent-color: #ffea00;
+  --text-secondary-color: #66707b;
 
   /* Spacing */
-  --section-padding: 128px;
+  --section-padding: 64px;
   --content-max-width: 1200px;
-  --nav-height: 64px;
+  --nav-height: 88px;
 
   /* Heading sizes (desktop) */
-  --heading-size-xxl: 56px;
-  --heading-size-xl: 40px;
+  --heading-size-xxl: 48px;
+  --heading-size-xl: 36px;
   --heading-size-l: 24px;
-  --heading-size-m: 20px;
+  --heading-size-m: 21px;
   --heading-size-s: 18px;
-  --heading-size-xs: 14px;
+  --heading-size-xs: 16px;
 
   /* Radius */
-  --radius-card: 12px;
-  --radius-pill: 9999px;
+  --radius-card: 0;
+  --radius-pill: 0;
 }

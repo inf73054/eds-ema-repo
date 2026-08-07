@@ -1,17 +1,12 @@
 {
   "status": "success",
-  "url": "https://wknd-trendsetters.site/about-us",
+  "url": "https://wknd.site/us/en/about-us.html",
   "path": "about-us",
-  "timestamp": "2026-08-05T08:39:57.290Z",
-  "title": "WKND Trendsetters - Fresh Looks, Bold Stories, Real Life",
-  "template": "about-us",
+  "timestamp": "2026-08-07T09:09:17.016Z",
+  "title": "About Us",
+  "template": "wknd-about-us",
   "blocks": [
-    "hero-collage",
-    "columns-article",
-    "cards-gallery",
-    "tabs-testimonial",
-    "cards-article",
-    "accordion-faq",
-    "hero-banner"
+    "cards-team",
+    "cards-team"
   ]
 }
