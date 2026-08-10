@@ -1,47 +1,85 @@
+/* columns-article — WKND teaser look: image beside a grey content panel.
+   Values extracted from the live https://wknd.site featured teaser (.cmp-teaser):
+   panel bg rgb(235,235,235), padding 63px 36px 36px, Asar h2 36px/1.5,
+   Source Sans Pro eyebrow 18px/700, 14px/1.75 description, blue CTA link.
+   Decorated DOM: .columns-article > div > [ .columns-article-img-col (picture) | div (text) ] */
+
+/* row — stacked on mobile (image on top, panel below) */
 .columns-article > div {
   display: flex;
   flex-direction: column;
-  gap: 0;
+}
+
+/* image cell */
+.columns-article > div > .columns-article-img-col {
+  padding: 0;
+  line-height: 0;
+}
+
+.columns-article-img-col picture {
+  display: block;
+  width: 100%;
 }
 
 .columns-article img {
+  display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 3 / 2;
   object-fit: cover;
-  display: block;
 }
 
-/* text column sits in a grey panel (WKND teaser look) */
-.columns-article > div > div {
-  order: 1;
-  background-color: var(--light-color);
-  padding: 40px 36px;
+/* grey content panel — every cell that is not the image */
+.columns-article > div > div:not(.columns-article-img-col) {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: content-box;
+  padding: 63px 36px 36px;
+  background-color: #ebebeb;
+  color: var(--text-color);
 }
 
-.columns-article > div > .columns-article-img-col {
-  order: 0;
-  background: none;
-  padding: 0;
-}
-
-.columns-article h2 {
-  margin: 0 0 12px;
-}
-
-/* eyebrow / pretitle */
+/* eyebrow / pretitle (bold) */
 .columns-article strong {
   font-family: var(--body-font-family);
+  font-size: 18px;
   font-weight: 700;
-  font-size: 16px;
+  line-height: 2.5;
 }
 
-/* teaser CTA link — WKND blue */
+/* title — Asar heading */
+.columns-article h1,
+.columns-article h2 {
+  margin: 0 0 18px;
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+/* description / body copy */
+.columns-article p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text-color);
+}
+
+/* spacing above the CTA paragraph */
+.columns-article > div > div:not(.columns-article-img-col) > p:last-child {
+  margin-top: 18px;
+}
+
+/* default links (breadcrumb / byline links stay dark) */
 .columns-article a:any-link {
-  color: #0045ff;
+  color: var(--text-color);
   text-decoration: none;
 }
 
 .columns-article a:hover {
+  color: var(--link-hover-color);
   text-decoration: underline;
 }
 
@@ -58,23 +96,51 @@
   text-decoration: none;
 }
 
+/* teaser CTA — yellow square button (matches live WKND teaser action) */
+.columns-article > div > div:not(.columns-article-img-col) > p:last-child a:any-link {
+  display: inline-block;
+  padding: 14px 35px;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.columns-article > div > div:not(.columns-article-img-col) > p:last-child a:hover,
+.columns-article > div > div:not(.columns-article-img-col) > p:last-child a:focus-visible {
+  background-color: var(--text-color);
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+/* desktop — two columns: image (2 parts) beside grey panel (1 part) */
 @media (width >= 900px) {
   .columns-article > div {
+    flex-direction: row;
     align-items: stretch;
-    flex-direction: unset;
-    gap: 0;
-  }
-
-  .columns-article > div > div {
-    flex: 1;
-    order: unset;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 63px 36px 36px;
   }
 
   .columns-article > div > .columns-article-img-col {
-    padding: 0;
+    flex: 2 1 0%;
+  }
+
+  .columns-article-img-col picture {
+    height: 100%;
+  }
+
+  .columns-article img {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .columns-article > div > div:not(.columns-article-img-col) {
+    flex: 1 1 0%;
+  }
+
+  .columns-article h1,
+  .columns-article h2 {
+    font-size: 36px;
   }
 }

@@ -1,3 +1,9 @@
+/*
+ * Table block — WKND "trip details" look.
+ * Values extracted from live: label (dt) 12px / rgb(105,105,105) / uppercase,
+ * value (dd) dark rgb(32,32,32) / semibold, light borderless list separation.
+ */
+
 .table.block {
   width: 100%;
   overflow-x: auto;
@@ -10,55 +16,77 @@
   font-size: var(--body-font-size-s);
 }
 
+/* EDS wraps every cell's text in a <p>; strip its default spacing */
+.table.block table th p,
+.table.block table td p {
+  margin: 0;
+}
+
+.table.block table td p + p {
+  margin-top: 0.25em;
+}
+
+/* header row acts as the "Trip Details" title: clean underline, no heavy grid */
+.table.block table thead th {
+  padding: 0 0 12px;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-s);
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  border-bottom: 2px solid var(--text-color);
+}
+
+/* light, borderless list separation between rows */
+.table.block table tbody tr {
+  border-bottom: 1px solid #ebebeb;
+}
+
+.table.block table tbody td {
+  padding: 16px 0;
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* label: small uppercase grey */
+.table.block table tbody td:first-child {
+  width: 40%;
+  padding-right: 24px;
+  color: #696969;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-transform: uppercase;
+  vertical-align: top;
+}
+
+/* value: larger, dark, semibold */
+.table.block table tbody td:last-child {
+  color: var(--text-color);
+  font-size: var(--body-font-size-m);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* no-header variant keeps the same light look on the first row */
+.table.block.no-header table tbody tr:first-child {
+  border-top: 1px solid #ebebeb;
+}
+
 @media (width >= 900px) {
   .table.block table {
     font-size: var(--body-font-size-m);
   }
-}
 
-.table.block table thead tr {
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-}
+  .table.block table thead th {
+    padding-bottom: 16px;
+  }
 
-.table.block table tbody tr {
-  border-bottom: 1px solid #dadada;
-}
+  .table.block table tbody td {
+    padding: 18px 0;
+  }
 
-.table.block table th {
-  font-weight: 700;
-}
-
-.table.block table th,
-.table.block table td {
-  padding: 12px;
-  text-align: left;
-}
-
-/* trip-details: first column = small uppercase grey label (WKND look) */
-.table.block table tbody td:first-child {
-  width: 40%;
-  color: #696969;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  vertical-align: top;
-}
-
-.table.block table tbody td:last-child {
-  font-size: 18px;
-}
-
-.table table th p,
-.table table td p {
-  margin: 0;
-}
-
-.table table td p + p {
-  margin-top: 0.25em;
-}
-
-/* no header variant */
-.table.block.no-header table tbody tr {
-  border-top: 1px solid #dadada;
+  .table.block table tbody td:first-child {
+    width: 30%;
+  }
 }

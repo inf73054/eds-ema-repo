@@ -1,49 +1,113 @@
+/* cards-team — contributor / guide cards (portrait + name + role + social row)
+   Values extracted from live WKND about-us (getComputedStyle):
+   grid = 4 cols desktop / 2 tablet / 1 mobile, cards centered;
+   portrait = 164px circle, object-fit cover, centered;
+   name (h3) = Asar 24px/400 #202020; role (h5) = Source Sans Pro 14px/600
+   #202020 uppercase; social row = centered dark 48px icon buttons. */
+
 .cards-team > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 32px;
+  grid-template-columns: 1fr;
+  gap: 40px 24px;
 }
 
 .cards-team > ul > li {
   text-align: center;
 }
 
+/* Portrait image: fixed circular thumbnail, centered in the card */
 .cards-team .cards-team-card-image {
   line-height: 0;
 }
 
-.cards-team > ul > li img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+.cards-team .cards-team-card-image picture {
+  display: inline-block;
 }
 
+.cards-team .cards-team-card-image img {
+  width: 164px;
+  height: 164px;
+  max-width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Card text block */
 .cards-team .cards-team-card-body {
-  margin-top: 16px;
+  margin-top: 18px;
 }
 
 .cards-team .cards-team-card-body h3 {
-  margin: 0;
+  margin: 0 0 6px;
   font-family: var(--heading-font-family);
   font-size: var(--heading-font-size-l);
   font-weight: 400;
+  line-height: 1.3;
+  color: var(--text-color);
 }
 
 .cards-team .cards-team-card-body h5 {
-  margin: 4px 0 12px;
-  color: var(--text-secondary-color);
+  margin: 0 0 4px;
   font-family: var(--body-font-family);
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-color);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
 }
 
+/* Social links row: centered row of dark icon-style buttons */
 .cards-team .cards-team-card-body p {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 16px;
-  margin: 0;
+  gap: 4px;
+  margin: 16px 0 0;
+}
+
+.cards-team .cards-team-card-body p a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  min-height: 40px;
+  padding: 0 14px;
+  background-color: var(--text-color);
+  color: var(--background-color);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+}
+
+.cards-team .cards-team-card-body p a:hover,
+.cards-team .cards-team-card-body p a:focus {
+  background-color: var(--link-hover-color);
+  color: var(--background-color);
+}
+
+/* Tablet: two columns */
+@media (width >= 600px) {
+  .cards-team > ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: four columns */
+@media (width >= 900px) {
+  .cards-team > ul {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 48px 24px;
+  }
 }
