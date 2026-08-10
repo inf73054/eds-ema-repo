@@ -52,10 +52,14 @@ export default {
     main.appendChild(sections);
     main.appendChild(document.createElement('hr'));
 
-    // --- Section 3: tools (search) ---
+    // --- Section 3: tools (search) — icon links to the /search page ---
     const tools = document.createElement('div');
     const toolsP = document.createElement('p');
-    toolsP.textContent = ':search:';
+    const searchLink = document.createElement('a');
+    searchLink.setAttribute('href', '/search');
+    searchLink.setAttribute('aria-label', 'Search');
+    searchLink.textContent = ':search:';
+    toolsP.appendChild(searchLink);
     tools.appendChild(toolsP);
     main.appendChild(tools);
 

@@ -20,9 +20,9 @@ const NAV = [
 ];
 
 const SOCIAL = [
-  { text: 'Facebook', href: '#facebook' },
-  { text: 'Twitter', href: '#twitter' },
-  { text: 'Instagram', href: '#instagram' },
+  { text: 'Facebook', href: 'https://www.facebook.com/' },
+  { text: 'Twitter', href: 'https://twitter.com/' },
+  { text: 'Instagram', href: 'https://www.instagram.com/' },
 ];
 
 export default {
