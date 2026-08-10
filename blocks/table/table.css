@@ -35,6 +35,20 @@
   text-align: left;
 }
 
+/* trip-details: first column = small uppercase grey label (WKND look) */
+.table.block table tbody td:first-child {
+  width: 40%;
+  color: #696969;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  vertical-align: top;
+}
+
+.table.block table tbody td:last-child {
+  font-size: 18px;
+}
+
 .table table th p,
 .table table td p {
   margin: 0;

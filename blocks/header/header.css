@@ -159,6 +159,9 @@ header nav .nav-sections {
   flex: 1 1 auto;
   display: none;
   visibility: hidden;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.02em;
 }
 
 header nav[aria-expanded='true'] .nav-sections {
@@ -269,4 +272,26 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+}
+
+/* --- WKND nav link styling (uppercase + yellow hover box) --- */
+header nav .nav-sections a:any-link {
+  display: inline-block;
+  padding: 8px 16px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+header nav .nav-sections a:any-link:hover,
+header nav .nav-sections a:any-link:focus-visible {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+}
+
+/* search tool icon */
+header nav .nav-tools .icon-search,
+header nav .nav-tools .icon svg {
+  width: 22px;
+  height: 22px;
 }

@@ -26,12 +26,21 @@ export default function transform(hookName, element, payload) {
       '[class*="sign-in"]',
       'nav[aria-label="Breadcrumb"]',
       '.cmp-breadcrumb',
+      // hidden mobile navigation menu appended at end of <body> (Home/Magazine/…)
+      '#mobileNav',
+      'a[href="#mobileNav"]',
+      '.cmp-navigation',
+      'nav.navigation',
     ]);
+
+    // Remove carousel navigation controls (Previous / Next buttons + slide tabs)
+    // that otherwise leak in as the text "Previous Next". Keep the slide image.
+    element.querySelectorAll('.cmp-carousel__actions, .cmp-carousel__action, .cmp-carousel__indicators, [class*="carousel__action"]').forEach((el) => el.remove());
+    element.querySelectorAll('.cmp-carousel button, [class*="carousel"] button').forEach((btn) => btn.remove());
 
     // Remove the dynamic "Share this Adventure" widget (heading + share buttons).
     element.querySelectorAll('h5, [class*="sharing"], [data-cmp-is="sharing"]').forEach((el) => {
       if (/share this/i.test(el.textContent || '')) {
-        // remove the share heading and its following sibling widget if present
         const next = el.nextElementSibling;
         el.remove();
         if (next && next.querySelector && next.querySelector('a[href*="pinterest"], a[href*="facebook"], a[href*="twitter"]')) {
@@ -39,6 +48,10 @@ export default function transform(hookName, element, payload) {
         }
       }
     });
+
+    // Remove the repeated content-fragment title (h3.cmp-contentfragment__title
+    // duplicates the page H1 inside every tab panel).
+    element.querySelectorAll('h3.cmp-contentfragment__title, .cmp-contentfragment__title').forEach((el) => el.remove());
 
     // Flatten adventure tabs (Overview / Itinerary / What to Bring) into default content.
     element.querySelectorAll('.cmp-tabs').forEach((tabs) => {
@@ -53,13 +66,9 @@ export default function transform(hookName, element, payload) {
           h.textContent = label;
           frag.appendChild(h);
         }
-        // panel body: drop the repeated content-fragment title h3, keep the rest
+        // panel body: keep its real content (CF title h3 already removed above)
         const body = panel.querySelector('.cmp-contentfragment__element-value, article, .cmp-container') || panel;
         [...body.children].forEach((child) => {
-          if (child.tagName === 'H3' && labels.every((l) => l !== child.textContent.trim())) {
-            // this is the repeated CF page-title h3 — skip it
-            return;
-          }
           frag.appendChild(child.cloneNode(true));
         });
       });

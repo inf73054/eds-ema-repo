@@ -4,7 +4,7 @@
   padding: 0;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 16px;
+  gap: 40px 24px;
 }
 
 .cards-magazine > ul > li {
@@ -12,33 +12,38 @@
   flex-direction: column;
 }
 
-/* whole card is a link */
+/* card title link — WKND blue, sentence case */
 .cards-magazine > ul > li a {
-  color: var(--text-color);
+  color: #0045ff;
   text-decoration: none;
+}
+
+.cards-magazine > ul > li a:hover {
+  text-decoration: underline;
 }
 
 .cards-magazine .cards-magazine-card-image img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1.3 / 1;
   object-fit: cover;
   display: block;
 }
 
 .cards-magazine .cards-magazine-card-body {
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .cards-magazine .cards-magazine-card-body h3 {
   margin: 0 0 8px;
-  font-family: var(--heading-font-family);
-  font-size: var(--heading-font-size-l);
+  font-family: var(--body-font-family);
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.3;
 }
 
 .cards-magazine .cards-magazine-card-body p {
   margin: 0;
+  color: var(--text-color);
 }
 
 @media (width >= 600px) {

@@ -1,26 +1,51 @@
 .columns-article > div {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0;
 }
 
 .columns-article img {
   width: 100%;
   aspect-ratio: 3 / 2;
   object-fit: cover;
-  border-radius: 20px;
   display: block;
 }
 
+/* text column sits in a grey panel (WKND teaser look) */
 .columns-article > div > div {
   order: 1;
+  background-color: var(--light-color);
+  padding: 40px 36px;
 }
 
 .columns-article > div > .columns-article-img-col {
   order: 0;
+  background: none;
+  padding: 0;
 }
 
-/* breadcrumb row */
+.columns-article h2 {
+  margin: 0 0 12px;
+}
+
+/* eyebrow / pretitle */
+.columns-article strong {
+  font-family: var(--body-font-family);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* teaser CTA link — WKND blue */
+.columns-article a:any-link {
+  color: #0045ff;
+  text-decoration: none;
+}
+
+.columns-article a:hover {
+  text-decoration: underline;
+}
+
+/* breadcrumb row (article-header reuse) */
 .columns-article .breadcrumbs {
   display: flex;
   align-items: center;
@@ -35,13 +60,21 @@
 
 @media (width >= 900px) {
   .columns-article > div {
-    align-items: center;
+    align-items: stretch;
     flex-direction: unset;
-    gap: 24px;
+    gap: 0;
   }
 
   .columns-article > div > div {
     flex: 1;
     order: unset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 63px 36px 36px;
+  }
+
+  .columns-article > div > .columns-article-img-col {
+    padding: 0;
   }
 }
