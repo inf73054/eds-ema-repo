@@ -57,7 +57,11 @@ var CustomImportScript = (() => {
       main.appendChild(document.createElement("hr"));
       const tools = document.createElement("div");
       const toolsP = document.createElement("p");
-      toolsP.textContent = ":search:";
+      const searchLink = document.createElement("a");
+      searchLink.setAttribute("href", "/search");
+      searchLink.setAttribute("aria-label", "Search");
+      searchLink.textContent = ":search:";
+      toolsP.appendChild(searchLink);
       tools.appendChild(toolsP);
       main.appendChild(tools);
       return [{

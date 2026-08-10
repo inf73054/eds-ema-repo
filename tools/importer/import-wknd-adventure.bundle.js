@@ -79,8 +79,15 @@ var CustomImportScript = (() => {
         '[class*="languagenavigation"]',
         '[class*="sign-in"]',
         'nav[aria-label="Breadcrumb"]',
-        ".cmp-breadcrumb"
+        ".cmp-breadcrumb",
+        // hidden mobile navigation menu appended at end of <body> (Home/Magazine/…)
+        "#mobileNav",
+        'a[href="#mobileNav"]',
+        ".cmp-navigation",
+        "nav.navigation"
       ]);
+      element.querySelectorAll('.cmp-carousel__actions, .cmp-carousel__action, .cmp-carousel__indicators, [class*="carousel__action"]').forEach((el) => el.remove());
+      element.querySelectorAll('.cmp-carousel button, [class*="carousel"] button').forEach((btn) => btn.remove());
       element.querySelectorAll('h5, [class*="sharing"], [data-cmp-is="sharing"]').forEach((el) => {
         if (/share this/i.test(el.textContent || "")) {
           const next = el.nextElementSibling;
@@ -90,6 +97,7 @@ var CustomImportScript = (() => {
           }
         }
       });
+      element.querySelectorAll("h3.cmp-contentfragment__title, .cmp-contentfragment__title").forEach((el) => el.remove());
       element.querySelectorAll(".cmp-tabs").forEach((tabs) => {
         const labels = [...tabs.querySelectorAll(".cmp-tabs__tab")].map((t) => t.textContent.trim());
         const panels = [...tabs.querySelectorAll(".cmp-tabs__tabpanel")];
@@ -103,9 +111,6 @@ var CustomImportScript = (() => {
           }
           const body = panel.querySelector(".cmp-contentfragment__element-value, article, .cmp-container") || panel;
           [...body.children].forEach((child) => {
-            if (child.tagName === "H3" && labels.every((l) => l !== child.textContent.trim())) {
-              return;
-            }
             frag.appendChild(child.cloneNode(true));
           });
         });
