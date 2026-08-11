@@ -3,29 +3,30 @@
 
 // PARSER IMPORTS
 import teaserColumnsParser from './parsers/teaser-columns.js';
-import cardsMagazineParser from './parsers/cards-magazine.js';
+import cardsAdventuresParser from './parsers/cards-adventures.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/wknd-cleanup.js';
 
 const parsers = {
   'teaser-columns': teaserColumnsParser,
-  'cards-magazine': cardsMagazineParser,
+  'cards-adventures': cardsAdventuresParser,
 };
 
 // PAGE TEMPLATE CONFIGURATION — WKND Adventures hub -> /adventures
 // The page has a category tab filter with 6 image-lists (All + 5 subsets).
 // Only the active "All" panel (.cmp-tabs__tabpanel--active) holds all 16 cards;
-// target it exclusively so the filtered subsets are not duplicated.
+// target it exclusively so the filtered subsets are not duplicated. The
+// cards-adventures block rebuilds the category filter (All/Climbing/…) client-side.
 const PAGE_TEMPLATE = {
   name: 'wknd-adventures',
-  description: 'WKND Adventures hub: H1, intro teaser (columns-article), Current Adventures grid of 16 cards (cards-magazine) from the active All tab.',
+  description: 'WKND Adventures hub: H1, intro teaser (columns-article), Current Adventures grid of 16 cards (cards-adventures) with a client-side category filter.',
   urls: [
     'https://wknd.site/us/en/adventures.html',
   ],
   blocks: [
     { name: 'teaser-columns', instances: ['.cmp-teaser'] },
-    { name: 'cards-magazine', instances: ['.cmp-tabs__tabpanel--active ul.cmp-image-list'] },
+    { name: 'cards-adventures', instances: ['.cmp-tabs__tabpanel--active ul.cmp-image-list'] },
   ],
   sections: [],
 };
