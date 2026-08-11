@@ -104,10 +104,12 @@
   }
 }
 
-/* Desktop: four columns */
+/* Desktop: four columns — narrower cards + wider gutters to match wknd.site
+   (original cards ~235px with ~60px column gaps). */
 @media (width >= 900px) {
   .cards-team > ul {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 48px 24px;
+    grid-template-columns: repeat(4, minmax(0, 235px));
+    justify-content: space-between;
+    gap: 48px 60px;
   }
 }

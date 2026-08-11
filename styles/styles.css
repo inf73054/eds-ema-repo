@@ -433,3 +433,54 @@ main .section.dark h6 {
   }
 }
 
+/* magazine "Members Only": two compact teasers side-by-side (not full-width). */
+@media (width >= 900px) {
+  main .section.members {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: var(--content-max-width, 1200px);
+    margin: 0 auto;
+    padding: 0 32px;
+    align-items: start;
+  }
+
+  main .section.members > .columns-article-wrapper {
+    margin: 0;
+    max-width: none;
+    padding: 0;
+  }
+
+  /* members teasers stack image over text (compact card), not image-beside-panel */
+  main .section.members .columns-article > div {
+    flex-direction: column;
+  }
+
+  main .section.members .columns-article > div > div:not(.columns-article-img-col) {
+    padding: 24px;
+  }
+}
+
+/* magazine article body: narrow reading column + justified rhythm (matches
+   wknd.site article measure). Scoped to the 'article' section style. */
+main .section.article > div {
+  max-width: 776px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.article p {
+  line-height: 2.2;
+  text-align: justify;
+}
+
+/* byline (h4 "By …") — small uppercase caption, not a serif heading */
+main .section.article h4 {
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary-color);
+}
+
+

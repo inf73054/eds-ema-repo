@@ -99,6 +99,10 @@ export default {
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
+    // Final scrub: remove the Adobe demdex ID-syncing tracking link that martech
+    // injects late (survives the transformer hooks).
+    main.querySelectorAll('a[href*="demdex"], a[href*="dest5.html"]').forEach((a) => (a.closest('p') || a).remove());
+
     // Overwrite the existing homepage.
     const path = '/index';
 

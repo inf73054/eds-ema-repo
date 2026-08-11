@@ -84,11 +84,39 @@ export default {
 
     executeTransformers('afterTransform', main, payload);
 
+    // Members Only: the two teasers after the "Members Only" heading should sit
+    // as a compact 2-up row. Start a section before the first of them and tag it
+    // 'members' so CSS lays the two columns-article blocks side-by-side.
+    const membersHeading = [...main.querySelectorAll('h2')].find((h) => /members only/i.test(h.textContent));
+    if (membersHeading) {
+      // The teaser parser emits columns-article as a block TABLE whose first row
+      // is the block name "Columns Article" (the .columns-article class is added
+      // later by the serializer). Match those tables in document order.
+      const firstRowText = (t) => (t.querySelector('tr') ? t.querySelector('tr').textContent.replace(/\s+/g, ' ').trim().toLowerCase() : '');
+      const all = [...main.querySelectorAll('h2, table')];
+      const headingIdx = all.indexOf(membersHeading);
+      const membersBlocks = all.filter((el, i) => i > headingIdx && el.tagName === 'TABLE' && firstRowText(el).startsWith('columns'));
+      if (membersBlocks.length >= 2) {
+        const first = membersBlocks[0];
+        first.parentNode.insertBefore(document.createElement('hr'), first);
+        const last = membersBlocks[membersBlocks.length - 1];
+        const smd = WebImporter.Blocks.createBlock(document, {
+          name: 'Section Metadata',
+          cells: [['Style', 'members']],
+        });
+        if (last.nextSibling) last.parentNode.insertBefore(smd, last.nextSibling);
+        else last.parentNode.appendChild(smd);
+      }
+    }
+
     const hr = document.createElement('hr');
     main.appendChild(hr);
     WebImporter.rules.createMetadata(main, document);
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
+
+    // Final scrub: remove demdex tracking anchors injected late by martech.
+    main.querySelectorAll('a[href*="demdex"], a[href*="dest5.html"]').forEach((a) => (a.closest('p') || a).remove());
 
     // Publish the WKND magazine hub at its real path.
     const path = '/magazine';

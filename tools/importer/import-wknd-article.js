@@ -41,11 +41,22 @@ export default {
     // no blocks on this page — entirely default content
     executeTransformers('afterTransform', main, payload);
 
+    // Tag the article body with an 'article' section style so the narrow
+    // reading column + byline/avatar treatment apply only to article pages.
+    const smd = WebImporter.Blocks.createBlock(document, {
+      name: 'Section Metadata',
+      cells: [['Style', 'article']],
+    });
+    main.appendChild(smd);
+
     const hr = document.createElement('hr');
     main.appendChild(hr);
     WebImporter.rules.createMetadata(main, document);
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
+
+    // Final scrub: remove demdex tracking anchors injected late by martech.
+    main.querySelectorAll('a[href*="demdex"], a[href*="dest5.html"]').forEach((a) => (a.closest('p') || a).remove());
 
     // Publish each article at its real path: /us/en/magazine/<slug> -> /magazine/<slug>
     const pathname = new URL(params.originalURL).pathname
