@@ -84,7 +84,24 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/cards-magazine.js
+  // tools/importer/parsers/cards-adventures.js
+  var CATEGORIES = {
+    "Climbing New Zealand": ["Climbing"],
+    "Colorado Rock Climbing": ["Climbing"],
+    "Whistler Mountain Biking": ["Cycling"],
+    "Cycling Tuscany": ["Cycling", "Travel"],
+    "West Coast Cycling": ["Cycling"],
+    "Downhill Skiing Wyoming": ["Skiing"],
+    "Ski Touring Mont Blanc": ["Skiing"],
+    "Tahoe Skiing": ["Skiing"],
+    "Bali Surf Camp": ["Surfing"],
+    "Surf Camp in Costa Rica": ["Surfing"],
+    "Beervana in Portland": ["Travel"],
+    "Gastronomic Marais Tour": ["Travel"],
+    "Napa Wine Tasting": ["Travel"],
+    "Riverside Camping": ["Travel"],
+    "Yosemite Backpacking": ["Travel"]
+  };
   function parse2(element, { document: document2 }) {
     const items = [...element.querySelectorAll(":scope > li")];
     if (items.length === 0) {
@@ -119,9 +136,11 @@ var CustomImportScript = (() => {
         p.textContent = desc;
         body.push(p);
       }
-      return [img || "", body];
+      const catDiv = document2.createElement("div");
+      catDiv.textContent = (CATEGORIES[titleText] || []).join(", ");
+      return [img || "", body, catDiv];
     });
-    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-magazine", cells });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-adventures", cells });
     element.replaceWith(block);
   }
 
@@ -139,8 +158,22 @@ var CustomImportScript = (() => {
         ".footer",
         "search",
         '[class*="languagenavigation"]',
-        '[class*="sign-in"]'
+        '[class*="sign-in"]',
+        // hidden mobile nav menu (Home/Magazine/…) appended near end of <body>
+        "#mobileNav",
+        'a[href="#mobileNav"]',
+        ".cmp-navigation",
+        "nav.navigation",
+        // Adobe demdex ID-syncing iframe/link tracking artifact
+        'a[href*="demdex.net"]',
+        '[id*="demdex"]',
+        '[class*="demdex"]'
       ]);
+      element.querySelectorAll("a[href]").forEach((a) => {
+        if (/demdex\.net/i.test(a.getAttribute("href") || "") || /adobe id syncing/i.test(a.textContent || "")) {
+          a.remove();
+        }
+      });
       const cardSections = [...element.querySelectorAll("section")].filter(isCardSection);
       if (cardSections.length) {
         let currentGroup = null;
@@ -157,6 +190,18 @@ var CustomImportScript = (() => {
     }
     if (hookName === TransformHook.afterTransform) {
       WebImporter.DOMUtils.remove(element, ["header", "footer", "search"]);
+      element.querySelectorAll("a[href]").forEach((a) => {
+        const href = a.getAttribute("href") || "";
+        if (/demdex\.net/i.test(href) || /adobe id syncing/i.test(a.textContent || "")) {
+          (a.closest("p") || a).remove();
+        }
+      });
+      element.querySelectorAll("ul").forEach((ul) => {
+        const links = [...ul.querySelectorAll(":scope > li a, :scope > li > p > a")].map((a) => (a.textContent || "").trim());
+        if (links[0] === "Home" && links.includes("Magazine") && links.includes("About Us")) {
+          ul.remove();
+        }
+      });
       rewriteInternalLinks(element);
     }
   }
@@ -176,17 +221,17 @@ var CustomImportScript = (() => {
   // tools/importer/import-wknd-adventures.js
   var parsers = {
     "teaser-columns": parse,
-    "cards-magazine": parse2
+    "cards-adventures": parse2
   };
   var PAGE_TEMPLATE = {
     name: "wknd-adventures",
-    description: "WKND Adventures hub: H1, intro teaser (columns-article), Current Adventures grid of 16 cards (cards-magazine) from the active All tab.",
+    description: "WKND Adventures hub: H1, intro teaser (columns-article), Current Adventures grid of 16 cards (cards-adventures) with a client-side category filter.",
     urls: [
       "https://wknd.site/us/en/adventures.html"
     ],
     blocks: [
       { name: "teaser-columns", instances: [".cmp-teaser"] },
-      { name: "cards-magazine", instances: [".cmp-tabs__tabpanel--active ul.cmp-image-list"] }
+      { name: "cards-adventures", instances: [".cmp-tabs__tabpanel--active ul.cmp-image-list"] }
     ],
     sections: []
   };

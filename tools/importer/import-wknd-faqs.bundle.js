@@ -92,8 +92,22 @@ var CustomImportScript = (() => {
         ".footer",
         "search",
         '[class*="languagenavigation"]',
-        '[class*="sign-in"]'
+        '[class*="sign-in"]',
+        // hidden mobile nav menu (Home/Magazine/…) appended near end of <body>
+        "#mobileNav",
+        'a[href="#mobileNav"]',
+        ".cmp-navigation",
+        "nav.navigation",
+        // Adobe demdex ID-syncing iframe/link tracking artifact
+        'a[href*="demdex.net"]',
+        '[id*="demdex"]',
+        '[class*="demdex"]'
       ]);
+      element.querySelectorAll("a[href]").forEach((a) => {
+        if (/demdex\.net/i.test(a.getAttribute("href") || "") || /adobe id syncing/i.test(a.textContent || "")) {
+          a.remove();
+        }
+      });
       const cardSections = [...element.querySelectorAll("section")].filter(isCardSection);
       if (cardSections.length) {
         let currentGroup = null;
@@ -110,6 +124,18 @@ var CustomImportScript = (() => {
     }
     if (hookName === TransformHook.afterTransform) {
       WebImporter.DOMUtils.remove(element, ["header", "footer", "search"]);
+      element.querySelectorAll("a[href]").forEach((a) => {
+        const href = a.getAttribute("href") || "";
+        if (/demdex\.net/i.test(href) || /adobe id syncing/i.test(a.textContent || "")) {
+          (a.closest("p") || a).remove();
+        }
+      });
+      element.querySelectorAll("ul").forEach((ul) => {
+        const links = [...ul.querySelectorAll(":scope > li a, :scope > li > p > a")].map((a) => (a.textContent || "").trim());
+        if (links[0] === "Home" && links.includes("Magazine") && links.includes("About Us")) {
+          ul.remove();
+        }
+      });
       rewriteInternalLinks(element);
     }
   }
