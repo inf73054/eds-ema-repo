@@ -2,10 +2,11 @@
   "status": "success",
   "url": "https://wknd.site/us/en/adventures/west-coast-cycling.html",
   "path": "adventures/west-coast-cycling",
-  "timestamp": "2026-08-10T09:13:42.835Z",
+  "timestamp": "2026-08-11T05:39:47.535Z",
   "title": "West Coast Cycling",
   "template": "wknd-adventure",
   "blocks": [
-    "trip-details"
+    "trip-details",
+    "tabs"
   ]
 }
