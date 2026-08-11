@@ -53,28 +53,10 @@ export default function transform(hookName, element, payload) {
     // duplicates the page H1 inside every tab panel).
     element.querySelectorAll('h3.cmp-contentfragment__title, .cmp-contentfragment__title').forEach((el) => el.remove());
 
-    // Flatten adventure tabs (Overview / Itinerary / What to Bring) into default content.
-    element.querySelectorAll('.cmp-tabs').forEach((tabs) => {
-      const labels = [...tabs.querySelectorAll('.cmp-tabs__tab')].map((t) => t.textContent.trim());
-      const panels = [...tabs.querySelectorAll('.cmp-tabs__tabpanel')];
-      const frag = document.createElement('div');
-
-      panels.forEach((panel, i) => {
-        const label = labels[i] || '';
-        if (label) {
-          const h = document.createElement('h2');
-          h.textContent = label;
-          frag.appendChild(h);
-        }
-        // panel body: keep its real content (CF title h3 already removed above)
-        const body = panel.querySelector('.cmp-contentfragment__element-value, article, .cmp-container') || panel;
-        [...body.children].forEach((child) => {
-          frag.appendChild(child.cloneNode(true));
-        });
-      });
-
-      tabs.replaceWith(frag);
-    });
+    // NOTE: the tabs (.cmp-tabs) are intentionally left intact so the tabs parser
+    // converts them into a real interactive Tabs block. The trip-details <dl> and
+    // the tabs are laid out side-by-side by the adventure detail import script
+    // (sidebar + tabs) and CSS — they are NOT flattened into plain text.
   }
 
   if (hookName === TransformHook.afterTransform) {
