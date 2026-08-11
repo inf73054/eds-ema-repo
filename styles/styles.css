@@ -404,21 +404,32 @@ main .section.dark h6 {
   }
 }
 
-/* adventure detail body: trip-details sidebar (left) + tabs panel (right) */
+/* adventure detail body: trip-details sidebar (left) + tabs panel (right).
+   EDS emits the table and tabs as sibling *-wrapper divs inside the section,
+   so the grid goes on the section itself with the wrappers as grid items. */
 @media (width >= 900px) {
-  main .section.adventure-body > div {
+  main .section.adventure-body {
     display: grid;
     grid-template-columns: 280px 1fr;
     gap: 48px;
     align-items: start;
+    max-width: var(--content-max-width, 1200px);
+    margin: 0 auto;
+    padding: 0 32px;
   }
 
-  main .section.adventure-body .table-wrapper {
+  main .section.adventure-body > .table-wrapper {
     grid-column: 1;
+    margin: 0;
+    max-width: none;
+    padding: 0;
   }
 
-  main .section.adventure-body .tabs-wrapper {
+  main .section.adventure-body > .tabs-wrapper {
     grid-column: 2;
+    margin: 0;
+    max-width: none;
+    padding: 0;
   }
 }
 
