@@ -1,0 +1,40 @@
+{
+  "variantName": "cards-team",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-07T05:45:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/us/en/about-us.html",
+    "originPage": "Classic WKND Adventure - About Us page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "comfortable",
+    "purpose": "team",
+    "imagePattern": "portrait"
+  },
+  "contentPattern": {
+    "structure": "portrait image + name (h3) + role (h5) + 3 social icon links",
+    "buttonCount": 3,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "team member grids",
+      "contributor / author profile grids",
+      "staff or guide directories with portrait + name + role + social links"
+    ],
+    "notSuitableFor": [
+      "article/blog teaser cards with category and date (use cards-article)",
+      "image-only photo galleries (use cards-gallery)",
+      "cards with body copy paragraphs and CTAs"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/us/en/about-us"],
+    "reuseCount": 2,
+    "lastUsed": "2026-08-07T05:45:00.000Z",
+    "note": "Used twice on this page: 'Our Contributors' grid (4 cards) and 'WKND Guides' grid (3 cards)."
+  }
+}

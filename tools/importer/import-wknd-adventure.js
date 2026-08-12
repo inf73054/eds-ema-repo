@@ -1,0 +1,123 @@
+/* eslint-disable */
+/* global WebImporter */
+
+// PARSER IMPORTS
+import tripDetailsParser from './parsers/trip-details.js';
+import tabsParser from './parsers/tabs.js';
+
+// TRANSFORMER IMPORTS
+import adventureTransformer from './transformers/wknd-adventure.js';
+
+const parsers = {
+  'trip-details': tripDetailsParser,
+  tabs: tabsParser,
+};
+
+// PAGE TEMPLATE CONFIGURATION — WKND adventure detail -> /adventures/<slug>
+const PAGE_TEMPLATE = {
+  name: 'wknd-adventure',
+  description: 'WKND adventure detail: full-bleed hero + H1, then a 2-column body — trip-details sidebar (left) + interactive Overview/Itinerary/What-to-Bring tabs (right).',
+  urls: [
+    'https://wknd.site/us/en/adventures/bali-surf-camp.html',
+  ],
+  blocks: [
+    { name: 'trip-details', instances: ['dl.cmp-contentfragment__elements'] },
+    { name: 'tabs', instances: ['.cmp-tabs'] },
+  ],
+  sections: [],
+};
+
+const transformers = [adventureTransformer];
+
+function executeTransformers(hookName, element, payload) {
+  const enhancedPayload = { ...payload, template: PAGE_TEMPLATE };
+  transformers.forEach((transformerFn) => {
+    try {
+      transformerFn.call(null, hookName, element, enhancedPayload);
+    } catch (e) {
+      console.error(`Transformer failed at ${hookName}:`, e);
+    }
+  });
+}
+
+function findBlocksOnPage(document, template) {
+  const pageBlocks = [];
+  template.blocks.forEach((blockDef) => {
+    if (blockDef.name.startsWith('section-')) return;
+    blockDef.instances.forEach((selector) => {
+      const elements = document.querySelectorAll(selector);
+      if (elements.length === 0) {
+        console.warn(`Block "${blockDef.name}" selector not found: ${selector}`);
+      }
+      elements.forEach((element) => {
+        pageBlocks.push({ name: blockDef.name, selector, element });
+      });
+    });
+  });
+  console.log(`Found ${pageBlocks.length} block instances on page`);
+  return pageBlocks;
+}
+
+export default {
+  transform: (payload) => {
+    const { document, url, params } = payload;
+
+    const main = document.body;
+
+    executeTransformers('beforeTransform', main, payload);
+
+    const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
+    pageBlocks.forEach((block) => {
+      if (!block.element.parentNode) return;
+      const parser = parsers[block.name];
+      if (parser) {
+        try {
+          parser(block.element, { document, url, params });
+        } catch (e) {
+          console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
+        }
+      }
+    });
+
+    executeTransformers('afterTransform', main, payload);
+
+    // Arrange the body as a 2-column section: trip-details (left) + tabs (right).
+    // Identify the two block tables produced by the parsers via their block-name row.
+    const blockTables = [...main.querySelectorAll('table')];
+    const firstRowText = (t) => (t.querySelector('tr') ? t.querySelector('tr').textContent.replace(/\s+/g, ' ').trim().toLowerCase() : '');
+    const tripTable = blockTables.find((t) => firstRowText(t).startsWith('table'));
+    const tabsTable = blockTables.find((t) => firstRowText(t).startsWith('tabs'));
+    if (tripTable && tabsTable) {
+      // start a new section before the trip-details block (hero + H1 stay above)
+      tripTable.parentNode.insertBefore(document.createElement('hr'), tripTable);
+      // tag that section for the sidebar+tabs grid layout
+      const smd = WebImporter.Blocks.createBlock(document, {
+        name: 'Section Metadata',
+        cells: [['Style', 'adventure-body']],
+      });
+      if (tabsTable.nextSibling) tabsTable.parentNode.insertBefore(smd, tabsTable.nextSibling);
+      else tabsTable.parentNode.appendChild(smd);
+    }
+
+    const hr = document.createElement('hr');
+    main.appendChild(hr);
+    WebImporter.rules.createMetadata(main, document);
+    WebImporter.rules.transformBackgroundImages(main, document);
+    WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
+
+    // /us/en/adventures/<slug> -> /adventures/<slug>
+    const pathname = new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.html$/, '');
+    const slug = pathname.split('/').pop();
+    const path = `/us/en/adventures/${slug}`;
+
+    return [{
+      element: main,
+      path,
+      report: {
+        title: document.title,
+        template: PAGE_TEMPLATE.name,
+        blocks: pageBlocks.map((b) => b.name),
+      },
+    }];
+  },
+};

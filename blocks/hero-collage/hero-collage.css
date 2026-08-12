@@ -1,0 +1,46 @@
+.hero-collage > div {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.hero-collage .hero-collage-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero-collage .hero-collage-content .button-container,
+.hero-collage .hero-collage-content p:has(a.button) {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.hero-collage .hero-collage-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.hero-collage .hero-collage-images img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+}
+
+@media (width >= 900px) {
+  .hero-collage > div {
+    flex-direction: row;
+    align-items: center;
+    gap: 64px;
+  }
+
+  .hero-collage .hero-collage-content,
+  .hero-collage .hero-collage-images {
+    flex: 1;
+  }
+}

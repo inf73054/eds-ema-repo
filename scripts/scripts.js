@@ -147,7 +147,21 @@ function decorateButtons(main) {
  * @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
+/**
+ * Remove stray Adobe demdex ID-syncing tracking anchors that the source WKND
+ * site injects; they can survive import as visible "Adobe ID Syncing iFrame"
+ * links at the bottom of the content.
+ * @param {Element} main
+ */
+function removeTrackingArtifacts(main) {
+  main.querySelectorAll('a[href*="demdex"], a[href*="dest5.html"]').forEach((a) => {
+    (a.closest('p') || a).remove();
+  });
+}
+
+// eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
+  removeTrackingArtifacts(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);

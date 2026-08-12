@@ -1,0 +1,205 @@
+/* WKND-style hero carousel:
+   full-bleed slide image with an overlapping white content box,
+   Asar heading, yellow uppercase square CTA, dot indicators and
+   bottom-right prev/next chevrons. Mobile-first. */
+
+.carousel {
+  position: relative;
+}
+
+.carousel .carousel-slides,
+.carousel .carousel-slide-indicators {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel .carousel-slides {
+  display: flex;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overflow: scroll clip;
+}
+
+.carousel .carousel-slides::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel .carousel-slide {
+  position: relative;
+  display: flex;
+  flex: 0 0 100%;
+  flex-direction: column;
+  width: 100%;
+  scroll-snap-align: start;
+}
+
+/* full-bleed slide image */
+.carousel .carousel-slide-image {
+  width: 100%;
+  line-height: 0;
+}
+
+.carousel .carousel-slide-image picture,
+.carousel .carousel-slide-image img {
+  display: block;
+  width: 100%;
+}
+
+.carousel .carousel-slide-image img {
+  height: clamp(300px, 68vw, 440px);
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* overlapping white content box */
+.carousel .carousel-slide-content {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  margin: -48px 0 0;
+  padding: 24px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  text-align: left;
+}
+
+.carousel .carousel-slide-content h2 {
+  margin: 0 0 12px;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xl);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+.carousel .carousel-slide-content p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  line-height: 1.75;
+  color: var(--text-color);
+}
+
+/* CTA — yellow uppercase square button */
+.carousel .carousel-slide-content p:last-child {
+  margin-top: 18px;
+}
+
+.carousel .carousel-slide-content a {
+  display: inline-block;
+  padding: 14px 35px;
+  border-radius: 0;
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.carousel .carousel-slide-content a:hover,
+.carousel .carousel-slide-content a:focus-visible {
+  background-color: var(--text-color);
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+/* prev/next arrows — bottom-right dark chevrons, no background */
+.carousel .carousel-navigation-buttons {
+  position: absolute;
+  right: 16px;
+  bottom: 8px;
+  z-index: 2;
+  display: flex;
+  gap: 20px;
+}
+
+.carousel .carousel-navigation-buttons button {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.carousel .carousel-navigation-buttons button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--text-color);
+  border-bottom: 0;
+  border-left: 0;
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.carousel .carousel-navigation-buttons button.slide-next::after {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* dot indicators — centered, below the slide */
+.carousel .carousel-slide-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px 12px;
+  line-height: 0;
+}
+
+.carousel .carousel-slide-indicator button {
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgb(175 175 175);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.carousel .carousel-slide-indicator button:disabled,
+.carousel .carousel-slide-indicator button:hover,
+.carousel .carousel-slide-indicator button:focus-visible {
+  background-color: rgb(0 0 0 / 80%);
+}
+
+/* full-bleed: neutralize the section width/padding constraint */
+main .section > .carousel-wrapper {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (width >= 600px) {
+  .carousel .carousel-slide-image img {
+    height: clamp(400px, 56vw, 540px);
+  }
+
+  .carousel .carousel-slide-content {
+    margin: -96px 32px 0;
+    padding: 28px 36px;
+  }
+}
+
+@media (width >= 900px) {
+  .carousel .carousel-slide-image img {
+    height: clamp(480px, 50vw, 640px);
+  }
+
+  .carousel .carousel-slide-content {
+    min-height: 180px;
+    margin: -180px 44px 0;
+    padding: 36px 44px;
+  }
+}
