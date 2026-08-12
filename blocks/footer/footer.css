@@ -4,20 +4,18 @@ footer {
   font-size: var(--body-font-size-xs);
 }
 
-footer .footer > div {
-  margin: auto;
+footer .footer {
   max-width: 1200px;
+  margin: auto;
   padding: 40px 24px 24px;
 }
 
 footer .footer p {
   margin: 0;
-  color: #f7f7f7;
 }
 
 footer .footer a:any-link {
   color: #ebebeb;
-  text-transform: uppercase;
   text-decoration: none;
 }
 
@@ -26,26 +24,87 @@ footer .footer a:focus-visible {
   text-decoration: underline;
 }
 
-footer .footer ul {
-  list-style: none;
-  margin: 0 0 24px;
-  padding: 0;
+/* the fragment renders two sections: [0] top bar, [1] legal block */
+footer .footer > div:first-child {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 24px;
+  align-items: center;
+  gap: 24px 48px;
 }
 
+/* brand / logo */
+footer .footer > div:first-child > p:first-child a {
+  font-family: var(--heading-font-family);
+  font-size: 28px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* primary footer nav — inline row */
+footer .footer > div:first-child > ul:first-of-type {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+footer .footer > div:first-child > ul:first-of-type a {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Follow Us heading */
 footer .footer h4 {
+  margin: 0;
   color: #ebebeb;
   font-family: var(--body-font-family);
   font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
-  margin: 16px 0 8px;
+}
+
+/* social links row */
+footer .footer > div:first-child > ul:last-of-type {
+  display: flex;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* separator between top bar and legal */
+footer .footer hr {
+  margin: 24px 0;
+  border: 0;
+  border-top: 1px solid rgb(255 255 255 / 20%);
+}
+
+/* legal / attribution block */
+footer .footer > div:last-child p {
+  color: #b0b0b0;
+  font-size: 12px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  max-width: 100%;
+}
+
+footer .footer > div:last-child p:first-child {
+  color: #f7f7f7;
+  font-size: 13px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+footer .footer > div:last-child a {
+  color: #ebebeb;
+  text-decoration: underline;
 }
 
 @media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+  footer .footer {
+    padding: 48px 32px 32px;
   }
 }

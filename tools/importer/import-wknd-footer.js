@@ -4,12 +4,10 @@
 /**
  * Import script for the global footer document (/footer) from the WKND footer.
  *
- * The EDS footer block (blocks/footer/footer.js) simply loads /footer as a
- * fragment and appends its content, so the structure here is authored directly:
- *   - brand link (WKND)
- *   - footer nav links (Magazine, Adventures, FAQs, About Us)
- *   - Follow Us heading + social links
- *   - copyright line
+ * The EDS footer block (blocks/footer/footer.js) loads /footer as a fragment.
+ * Structure (two <hr>-separated sections):
+ *   1. top bar — brand (WKND) + nav links + "Follow Us" + social links
+ *   2. legal   — copyright + attribution paragraph (with links) + Adobe Stock line
  */
 
 const NAV = [
@@ -28,52 +26,64 @@ const SOCIAL = [
 export default {
   transform: (payload) => {
     const { document } = payload;
-
     const main = document.createElement('main');
-    const wrap = document.createElement('div');
 
-    // brand
+    const el = (tag, attrs, text) => {
+      const n = document.createElement(tag);
+      if (attrs) Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+      if (text != null) n.textContent = text;
+      return n;
+    };
+    const linkList = (items) => {
+      const ul = document.createElement('ul');
+      items.forEach((it) => {
+        const li = document.createElement('li');
+        li.appendChild(el('a', { href: it.href }, it.text));
+        ul.appendChild(li);
+      });
+      return ul;
+    };
+
+    // --- Section 1: top bar (brand + nav + Follow Us + socials) ---
+    const top = document.createElement('div');
     const brandP = document.createElement('p');
-    const brandLink = document.createElement('a');
-    brandLink.setAttribute('href', '/');
-    brandLink.textContent = 'WKND';
-    brandP.appendChild(brandLink);
-    wrap.appendChild(brandP);
+    brandP.appendChild(el('a', { href: '/' }, 'WKND'));
+    top.appendChild(brandP);
+    top.appendChild(linkList(NAV));
+    top.appendChild(el('h4', null, 'Follow Us'));
+    top.appendChild(linkList(SOCIAL));
+    main.appendChild(top);
 
-    // footer nav
-    const navUl = document.createElement('ul');
-    NAV.forEach((item) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.setAttribute('href', item.href);
-      a.textContent = item.text;
-      li.appendChild(a);
-      navUl.appendChild(li);
-    });
-    wrap.appendChild(navUl);
+    main.appendChild(document.createElement('hr'));
 
-    // Follow Us
-    const follow = document.createElement('h4');
-    follow.textContent = 'Follow Us';
-    wrap.appendChild(follow);
+    // --- Section 2: legal / attribution ---
+    const legal = document.createElement('div');
+    legal.appendChild(el('p', null, '© 2019, WKND Site.'));
 
-    const socialUl = document.createElement('ul');
-    SOCIAL.forEach((item) => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.setAttribute('href', item.href);
-      a.textContent = item.text;
-      li.appendChild(a);
-      socialUl.appendChild(li);
-    });
-    wrap.appendChild(socialUl);
+    // attribution paragraph with inline links (matches live footer text)
+    const attr = document.createElement('p');
+    attr.append(
+      document.createTextNode('WKND is a fictitious adventure and travel website created by Adobe to demonstrate how anyone can use Adobe Experience Manager to build a beautiful, feature-rich website over a single weekend. This site is built entirely with Adobe Experience Manager '),
+      el('a', { href: 'https://docs.adobe.com/content/help/en/experience-manager-core-components/using/introduction.html' }, 'Core Components'),
+      document.createTextNode(' and '),
+      el('a', { href: 'https://github.com/adobe/aem-project-archetype' }, 'Archetype'),
+      document.createTextNode(' that are available as open source code to the public. The entire '),
+      el('a', { href: 'https://github.com/adobe/aem-guides-wknd/' }, 'site source code'),
+      document.createTextNode(' is available as open source as well and is accompanied with a '),
+      el('a', { href: 'https://docs.adobe.com/content/help/en/experience-manager-learn/getting-started-wknd-tutorial-develop/overview.html' }, 'detailed tutorial'),
+      document.createTextNode(' on how to recreate the site.'),
+    );
+    legal.appendChild(attr);
 
-    // copyright
-    const copy = document.createElement('p');
-    copy.textContent = '© 2019, WKND Site.';
-    wrap.appendChild(copy);
+    const stock = document.createElement('p');
+    stock.append(
+      document.createTextNode('Many of the beautiful images in the WKND site are available for purchase via '),
+      el('a', { href: 'https://stock.adobe.com/' }, 'Adobe Stock'),
+      document.createTextNode('.'),
+    );
+    legal.appendChild(stock);
 
-    main.appendChild(wrap);
+    main.appendChild(legal);
 
     return [{
       element: main,
