@@ -36,7 +36,7 @@
   margin-top: 8px;
 }
 
-/* title — Source Sans Pro, 18px, WKND blue, sentence case (not uppercase) */
+/* title — Source Sans Pro, 18px, near-black, sentence case (not uppercase) */
 .cards-magazine .cards-magazine-card-body h3 {
   margin: 0;
   font-family: var(--body-font-family);
@@ -47,7 +47,7 @@
 }
 
 .cards-magazine .cards-magazine-card-body h3 a {
-  color: #0045ff;
+  color: var(--text-color);
   text-decoration: none;
 }
 
