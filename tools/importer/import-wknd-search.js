@@ -26,7 +26,7 @@ export default {
 
     return [{
       element: main,
-      path: '/search',
+      path: '/us/en/search',
       report: { title: 'Search', template: 'wknd-search' },
     }];
   },

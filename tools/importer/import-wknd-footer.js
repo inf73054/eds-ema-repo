@@ -11,10 +11,10 @@
  */
 
 const NAV = [
-  { text: 'Magazine', href: '/magazine' },
-  { text: 'Adventures', href: '/adventures' },
-  { text: 'FAQs', href: '/faqs' },
-  { text: 'About Us', href: '/about-us' },
+  { text: 'Magazine', href: '/us/en/magazine' },
+  { text: 'Adventures', href: '/us/en/adventures' },
+  { text: 'FAQs', href: '/us/en/faqs' },
+  { text: 'About Us', href: '/us/en/about-us' },
 ];
 
 const SOCIAL = [
@@ -47,7 +47,7 @@ export default {
     // --- Section 1: top bar (brand + nav + Follow Us + socials) ---
     const top = document.createElement('div');
     const brandP = document.createElement('p');
-    brandP.appendChild(el('a', { href: '/' }, 'WKND'));
+    brandP.appendChild(el('a', { href: '/us/en' }, 'WKND'));
     top.appendChild(brandP);
     top.appendChild(linkList(NAV));
     top.appendChild(el('h4', null, 'Follow Us'));

@@ -133,11 +133,7 @@ var CustomImportScript = (() => {
       let href = a.getAttribute("href") || "";
       href = href.replace(/^https?:\/\/wknd\.site/i, "");
       if (!href.startsWith("/us/en")) return;
-      let p = href.replace(/\.html$/, "");
-      if (p === "/us/en") p = "/";
-      else p = p.replace(/^\/us\/en/, "");
-      if (p === "") p = "/";
-      a.setAttribute("href", p);
+      a.setAttribute("href", href.replace(/\.html$/, ""));
     });
   }
 
@@ -208,7 +204,7 @@ var CustomImportScript = (() => {
       WebImporter.rules.createMetadata(main, document2);
       WebImporter.rules.transformBackgroundImages(main, document2);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
-      const path = "/about-us";
+      const path = "/us/en/about-us";
       return [{
         element: main,
         path,

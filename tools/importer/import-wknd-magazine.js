@@ -119,7 +119,7 @@ export default {
     main.querySelectorAll('a[href*="demdex"], a[href*="dest5.html"]').forEach((a) => (a.closest('p') || a).remove());
 
     // Publish the WKND magazine hub at its real path.
-    const path = '/magazine';
+    const path = '/us/en/magazine';
 
     return [{
       element: main,

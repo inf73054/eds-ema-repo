@@ -14,10 +14,10 @@
  */
 
 const PRIMARY = [
-  { text: 'Magazine', href: '/magazine' },
-  { text: 'Adventures', href: '/adventures' },
-  { text: 'FAQs', href: '/faqs' },
-  { text: 'About Us', href: '/about-us' },
+  { text: 'Magazine', href: '/us/en/magazine' },
+  { text: 'Adventures', href: '/us/en/adventures' },
+  { text: 'FAQs', href: '/us/en/faqs' },
+  { text: 'About Us', href: '/us/en/about-us' },
 ];
 
 export default {
@@ -30,7 +30,7 @@ export default {
     const brand = document.createElement('div');
     const brandP = document.createElement('p');
     const brandLink = document.createElement('a');
-    brandLink.setAttribute('href', '/');
+    brandLink.setAttribute('href', '/us/en');
     brandLink.textContent = 'WKND';
     brandP.appendChild(brandLink);
     brand.appendChild(brandP);
@@ -56,7 +56,7 @@ export default {
     const tools = document.createElement('div');
     const toolsP = document.createElement('p');
     const searchLink = document.createElement('a');
-    searchLink.setAttribute('href', '/search');
+    searchLink.setAttribute('href', '/us/en/search');
     searchLink.setAttribute('aria-label', 'Search');
     searchLink.textContent = ':search:';
     toolsP.appendChild(searchLink);

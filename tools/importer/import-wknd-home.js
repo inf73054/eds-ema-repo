@@ -103,8 +103,8 @@ export default {
     // injects late (survives the transformer hooks).
     main.querySelectorAll('a[href*="demdex"], a[href*="dest5.html"]').forEach((a) => (a.closest('p') || a).remove());
 
-    // Overwrite the existing homepage.
-    const path = '/index';
+    // Homepage lives at /us/en (the source home path).
+    const path = '/us/en';
 
     return [{
       element: main,

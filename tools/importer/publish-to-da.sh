@@ -10,10 +10,12 @@ BASE="https://admin.da.live/source/${ORG}/${REPO}"
 ROOT="content"
 
 # DA target path (no extension) -> local .plain.html file.
-# Excludes stale duplicates: blog, blog-ace-pro-court-polo, articles/*, blog/*.
+# Canonical set only: the /us/en content tree plus the global nav + footer.
+# Excludes stale root-level duplicates (about-us, magazine, adventures, faqs,
+# search, index, blog*) that predate the /us/en URL restoration.
 mapfile -t FILES < <(find "$ROOT" -name '*.plain.html' \
-  | grep -vE '(^|/)(blog\.plain\.html|blog-ace-pro-court-polo\.plain\.html)$' \
-  | grep -vE '/(articles|blog)/' \
+  \( -path "$ROOT/us/en/*" -o -path "$ROOT/us/en.plain.html" \
+     -o -path "$ROOT/nav.plain.html" -o -path "$ROOT/footer.plain.html" \) \
   | sort)
 
 ok=0; fail=0

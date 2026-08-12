@@ -62,14 +62,11 @@ export default function transform(hookName, element, payload) {
   if (hookName === TransformHook.afterTransform) {
     WebImporter.DOMUtils.remove(element, ['header', 'footer', 'search']);
 
-    // Rewrite internal wknd.site source paths to our migrated EDS paths.
+    // Normalize internal wknd.site links: drop domain + .html, keep /us/en prefix.
     element.querySelectorAll('a[href]').forEach((a) => {
-      let href = (a.getAttribute('href') || '').replace(/^https?:\/\/wknd\.site/i, '');
+      const href = (a.getAttribute('href') || '').replace(/^https?:\/\/wknd\.site/i, '');
       if (!href.startsWith('/us/en')) return;
-      let p = href.replace(/\.html$/, '');
-      p = (p === '/us/en') ? '/' : p.replace(/^\/us\/en/, '');
-      if (p === '') p = '/';
-      a.setAttribute('href', p);
+      a.setAttribute('href', href.replace(/\.html$/, ''));
     });
   }
 }

@@ -24,10 +24,10 @@ var CustomImportScript = (() => {
     default: () => import_wknd_footer_default
   });
   var NAV = [
-    { text: "Magazine", href: "/magazine" },
-    { text: "Adventures", href: "/adventures" },
-    { text: "FAQs", href: "/faqs" },
-    { text: "About Us", href: "/about-us" }
+    { text: "Magazine", href: "/us/en/magazine" },
+    { text: "Adventures", href: "/us/en/adventures" },
+    { text: "FAQs", href: "/us/en/faqs" },
+    { text: "About Us", href: "/us/en/about-us" }
   ];
   var SOCIAL = [
     { text: "Facebook", href: "https://www.facebook.com/" },
@@ -38,40 +38,53 @@ var CustomImportScript = (() => {
     transform: (payload) => {
       const { document } = payload;
       const main = document.createElement("main");
-      const wrap = document.createElement("div");
+      const el = (tag, attrs, text) => {
+        const n = document.createElement(tag);
+        if (attrs) Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+        if (text != null) n.textContent = text;
+        return n;
+      };
+      const linkList = (items) => {
+        const ul = document.createElement("ul");
+        items.forEach((it) => {
+          const li = document.createElement("li");
+          li.appendChild(el("a", { href: it.href }, it.text));
+          ul.appendChild(li);
+        });
+        return ul;
+      };
+      const top = document.createElement("div");
       const brandP = document.createElement("p");
-      const brandLink = document.createElement("a");
-      brandLink.setAttribute("href", "/");
-      brandLink.textContent = "WKND";
-      brandP.appendChild(brandLink);
-      wrap.appendChild(brandP);
-      const navUl = document.createElement("ul");
-      NAV.forEach((item) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.setAttribute("href", item.href);
-        a.textContent = item.text;
-        li.appendChild(a);
-        navUl.appendChild(li);
-      });
-      wrap.appendChild(navUl);
-      const follow = document.createElement("h4");
-      follow.textContent = "Follow Us";
-      wrap.appendChild(follow);
-      const socialUl = document.createElement("ul");
-      SOCIAL.forEach((item) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.setAttribute("href", item.href);
-        a.textContent = item.text;
-        li.appendChild(a);
-        socialUl.appendChild(li);
-      });
-      wrap.appendChild(socialUl);
-      const copy = document.createElement("p");
-      copy.textContent = "\xA9 2019, WKND Site.";
-      wrap.appendChild(copy);
-      main.appendChild(wrap);
+      brandP.appendChild(el("a", { href: "/us/en" }, "WKND"));
+      top.appendChild(brandP);
+      top.appendChild(linkList(NAV));
+      top.appendChild(el("h4", null, "Follow Us"));
+      top.appendChild(linkList(SOCIAL));
+      main.appendChild(top);
+      main.appendChild(document.createElement("hr"));
+      const legal = document.createElement("div");
+      legal.appendChild(el("p", null, "\xA9 2019, WKND Site."));
+      const attr = document.createElement("p");
+      attr.append(
+        document.createTextNode("WKND is a fictitious adventure and travel website created by Adobe to demonstrate how anyone can use Adobe Experience Manager to build a beautiful, feature-rich website over a single weekend. This site is built entirely with Adobe Experience Manager "),
+        el("a", { href: "https://docs.adobe.com/content/help/en/experience-manager-core-components/using/introduction.html" }, "Core Components"),
+        document.createTextNode(" and "),
+        el("a", { href: "https://github.com/adobe/aem-project-archetype" }, "Archetype"),
+        document.createTextNode(" that are available as open source code to the public. The entire "),
+        el("a", { href: "https://github.com/adobe/aem-guides-wknd/" }, "site source code"),
+        document.createTextNode(" is available as open source as well and is accompanied with a "),
+        el("a", { href: "https://docs.adobe.com/content/help/en/experience-manager-learn/getting-started-wknd-tutorial-develop/overview.html" }, "detailed tutorial"),
+        document.createTextNode(" on how to recreate the site.")
+      );
+      legal.appendChild(attr);
+      const stock = document.createElement("p");
+      stock.append(
+        document.createTextNode("Many of the beautiful images in the WKND site are available for purchase via "),
+        el("a", { href: "https://stock.adobe.com/" }, "Adobe Stock"),
+        document.createTextNode(".")
+      );
+      legal.appendChild(stock);
+      main.appendChild(legal);
       return [{
         element: main,
         path: "/footer",

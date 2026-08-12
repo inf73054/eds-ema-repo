@@ -132,12 +132,9 @@ var CustomImportScript = (() => {
     if (hookName === TransformHook.afterTransform) {
       WebImporter.DOMUtils.remove(element, ["header", "footer", "search"]);
       element.querySelectorAll("a[href]").forEach((a) => {
-        let href = (a.getAttribute("href") || "").replace(/^https?:\/\/wknd\.site/i, "");
+        const href = (a.getAttribute("href") || "").replace(/^https?:\/\/wknd\.site/i, "");
         if (!href.startsWith("/us/en")) return;
-        let p = href.replace(/\.html$/, "");
-        p = p === "/us/en" ? "/" : p.replace(/^\/us\/en/, "");
-        if (p === "") p = "/";
-        a.setAttribute("href", p);
+        a.setAttribute("href", href.replace(/\.html$/, ""));
       });
     }
   }
@@ -225,7 +222,7 @@ var CustomImportScript = (() => {
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
       const pathname = new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html$/, "");
       const slug = pathname.split("/").pop();
-      const path = `/adventures/${slug}`;
+      const path = `/us/en/adventures/${slug}`;
       return [{
         element: main,
         path,

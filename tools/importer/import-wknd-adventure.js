@@ -108,7 +108,7 @@ export default {
     // /us/en/adventures/<slug> -> /adventures/<slug>
     const pathname = new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.html$/, '');
     const slug = pathname.split('/').pop();
-    const path = `/adventures/${slug}`;
+    const path = `/us/en/adventures/${slug}`;
 
     return [{
       element: main,

@@ -63,7 +63,7 @@ export default {
       .replace(/\/$/, '')
       .replace(/\.html$/, '');
     const slug = pathname.split('/').pop();
-    const path = `/magazine/${slug}`;
+    const path = `/us/en/magazine/${slug}`;
 
     return [{
       element: main,

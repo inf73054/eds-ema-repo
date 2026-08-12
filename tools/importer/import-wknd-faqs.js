@@ -84,7 +84,7 @@ export default {
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
-    const path = '/faqs';
+    const path = '/us/en/faqs';
 
     return [{
       element: main,

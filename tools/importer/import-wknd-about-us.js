@@ -87,7 +87,7 @@ export default {
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
 
     // Overwrite the existing /about-us page (map WKND about-us onto our about-us slot).
-    const path = '/about-us';
+    const path = '/us/en/about-us';
 
     return [{
       element: main,

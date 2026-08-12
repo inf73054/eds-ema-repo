@@ -114,13 +114,9 @@ export default function transform(hookName, element, payload) {
 function rewriteInternalLinks(element) {
   element.querySelectorAll('a[href]').forEach((a) => {
     let href = a.getAttribute('href') || '';
-    // normalize absolute wknd.site URLs to path-only
+    // normalize absolute wknd.site URLs to path-only, drop .html, keep /us/en prefix
     href = href.replace(/^https?:\/\/wknd\.site/i, '');
     if (!href.startsWith('/us/en')) return;
-    let p = href.replace(/\.html$/, '');
-    if (p === '/us/en') p = '/';
-    else p = p.replace(/^\/us\/en/, '');
-    if (p === '') p = '/';
-    a.setAttribute('href', p);
+    a.setAttribute('href', href.replace(/\.html$/, ''));
   });
 }

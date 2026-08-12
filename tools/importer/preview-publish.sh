@@ -10,8 +10,8 @@ REF="main"
 ROOT="content"
 
 mapfile -t FILES < <(find "$ROOT" -name '*.plain.html' \
-  | grep -vE '(^|/)(blog\.plain\.html|blog-ace-pro-court-polo\.plain\.html)$' \
-  | grep -vE '/(articles|blog)/' \
+  \( -path "$ROOT/us/en/*" -o -path "$ROOT/us/en.plain.html" \
+     -o -path "$ROOT/nav.plain.html" -o -path "$ROOT/footer.plain.html" \) \
   | sort)
 
 action="${1:-preview}"   # preview | live
