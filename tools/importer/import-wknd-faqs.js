@@ -78,6 +78,14 @@ export default {
 
     executeTransformers('afterTransform', main, payload);
 
+    // Tag the FAQ section for the 2-column layout: main content (heading, image,
+    // intro, accordion) on the left; the "Need more help?" contact on the right.
+    const smd = WebImporter.Blocks.createBlock(document, {
+      name: 'Section Metadata',
+      cells: [['Style', 'faqs']],
+    });
+    main.appendChild(smd);
+
     const hr = document.createElement('hr');
     main.appendChild(hr);
     WebImporter.rules.createMetadata(main, document);

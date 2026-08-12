@@ -209,6 +209,11 @@ var CustomImportScript = (() => {
         }
       });
       executeTransformers("afterTransform", main, payload);
+      const smd = WebImporter.Blocks.createBlock(document2, {
+        name: "Section Metadata",
+        cells: [["Style", "faqs"]]
+      });
+      main.appendChild(smd);
       const hr = document2.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document2);
