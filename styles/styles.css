@@ -461,6 +461,46 @@ main .section.dark h6 {
   }
 }
 
+/* FAQs: main content (heading, image, intro, accordion) in a wide left column
+   with the "Need more help?" contact in a narrow right column beside it.
+   The section holds three wrappers in source order:
+     1. .default-content-wrapper  — heading + image + intro   (left, row 1)
+     2. .accordion-faq-wrapper    — the accordion              (left, row 2)
+     3. .default-content-wrapper  — "Need more help?" contact  (right, spans)  */
+@media (width >= 900px) {
+  main .section.faqs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 291px;
+    column-gap: 96px;
+    align-items: start;
+    max-width: var(--content-max-width, 1200px);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  main .section.faqs > .default-content-wrapper,
+  main .section.faqs > .accordion-faq-wrapper {
+    margin: 0;
+    max-width: none;
+    padding: 0;
+  }
+
+  main .section.faqs > .default-content-wrapper:first-child {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  main .section.faqs > .accordion-faq-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  main .section.faqs > .default-content-wrapper:last-child {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
 /* magazine article body: narrow reading column + justified rhythm (matches
    wknd.site article measure). Scoped to the 'article' section style. */
 main .section.article > div {
