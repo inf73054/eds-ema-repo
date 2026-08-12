@@ -164,8 +164,22 @@ export default async function decorate(block) {
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
+  // top utility bar (dark): Sign In + language selector, matching wknd.site
+  const topBar = document.createElement('div');
+  topBar.className = 'nav-utility';
+  topBar.innerHTML = `
+    <div class="nav-utility-inner">
+      <a class="nav-signin" href="#sign-in">Sign In</a>
+      <button type="button" class="nav-lang" aria-haspopup="true" aria-expanded="false">
+        <span class="nav-lang-flag" aria-hidden="true">🇺🇸</span>
+        <span class="nav-lang-label">EN-US</span>
+        <span class="nav-lang-caret" aria-hidden="true"></span>
+      </button>
+    </div>`;
+
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+  navWrapper.append(topBar);
   navWrapper.append(nav);
   block.append(navWrapper);
 }
