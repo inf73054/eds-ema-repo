@@ -548,4 +548,19 @@ main .section.article h5 {
   color: var(--text-color);
 }
 
+/* author-bio name (the article's final h2, e.g. "Jacob Wester") is 24px on
+   wknd.site — smaller than the 36px section subheadings that precede it. */
+/* stylelint-disable-next-line no-descending-specificity */
+main .section.article h2:not(:has(~ h2)) {
+  font-size: 24px;
+}
+
+/* about-us section intros ("Meet the outstanding individuals…") are small 14px
+   italic captions on wknd.site. Target a paragraph that is entirely emphasized,
+   scoped away from article/faqs bodies so inline emphasis is unaffected. */
+/* stylelint-disable-next-line no-descending-specificity */
+main .section:not(.article, .faqs) .default-content-wrapper p:has(> em:only-child) {
+  font-size: 14px;
+}
+
 
