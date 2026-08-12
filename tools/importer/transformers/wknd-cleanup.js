@@ -94,6 +94,17 @@ export default function transform(hookName, element, payload) {
       }
     });
 
+    // Article pages repeat the content-fragment title as an <h3> right after the
+    // H1 + byline. The original renders only the H1, so drop any heading whose
+    // text duplicates the H1.
+    const h1 = element.querySelector('h1');
+    if (h1) {
+      const h1Text = (h1.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+      element.querySelectorAll('h2, h3').forEach((h) => {
+        if ((h.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase() === h1Text) h.remove();
+      });
+    }
+
     // Rewrite internal wknd.site source paths to our migrated EDS paths so
     // card/teaser/nav links resolve within this project instead of jumping to
     // the live source site.

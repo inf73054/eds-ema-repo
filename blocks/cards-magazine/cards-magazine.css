@@ -36,14 +36,14 @@
   margin-top: 8px;
 }
 
-/* title — Source Sans Pro, 18px, near-black, sentence case (not uppercase) */
+/* title — Source Sans Pro, 18px, near-black, uppercase semibold (matches wknd.site) */
 .cards-magazine .cards-magazine-card-body h3 {
   margin: 0;
   font-family: var(--body-font-family);
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.5;
-  text-transform: none;
+  text-transform: uppercase;
 }
 
 .cards-magazine .cards-magazine-card-body h3 a {
@@ -55,13 +55,14 @@
   text-decoration: underline;
 }
 
-/* description — 14px muted grey, 16px above */
+/* description — 14px muted grey uppercase, 16px above (matches wknd.site) */
 .cards-magazine .cards-magazine-card-body p {
   margin: 16px 0 0;
   font-family: var(--body-font-family);
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
+  text-transform: uppercase;
   color: #696969;
 }
 

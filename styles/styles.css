@@ -461,6 +461,16 @@ main .section.dark h6 {
   }
 }
 
+/* members teaser titles ("Alaskan Adventure", "Fly Fishing the Amazon") are small
+   uppercase Source Sans captions on wknd.site — not the 36px serif section size. */
+main .section.members .columns-article h2 {
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
 /* FAQs: main content (heading, image, intro, accordion) in a wide left column
    with the "Need more help?" contact in a narrow right column beside it.
    The section holds three wrappers in source order:
@@ -501,6 +511,11 @@ main .section.dark h6 {
   }
 }
 
+/* FAQ "Need more help?" contact links (phone + email) — blue, matches wknd.site */
+main .section.faqs .default-content-wrapper:last-child a {
+  color: #0045ff;
+}
+
 /* magazine article body: narrow reading column + justified rhythm (matches
    wknd.site article measure). Scoped to the 'article' section style. */
 main .section.article > div {
@@ -520,7 +535,17 @@ main .section.article h4 {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  color: var(--text-secondary-color);
+  color: var(--text-color);
+}
+
+/* "SHARE THIS STORY" — small uppercase Source Sans caption (not a serif heading) */
+main .section.article h5 {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-color);
 }
 
 

@@ -99,6 +99,13 @@ var CustomImportScript = (() => {
           ul.remove();
         }
       });
+      const h1 = element.querySelector("h1");
+      if (h1) {
+        const h1Text = (h1.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+        element.querySelectorAll("h2, h3").forEach((h) => {
+          if ((h.textContent || "").replace(/\s+/g, " ").trim().toLowerCase() === h1Text) h.remove();
+        });
+      }
       rewriteInternalLinks(element);
     }
   }

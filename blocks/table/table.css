@@ -60,12 +60,13 @@
   vertical-align: top;
 }
 
-/* value: larger, dark, semibold */
+/* value: dark, semibold, small uppercase (matches wknd.site trip details) */
 .table.block table tbody td:last-child {
   color: var(--text-color);
-  font-size: var(--body-font-size-m);
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.4;
+  text-transform: uppercase;
 }
 
 /* no-header variant keeps the same light look on the first row */

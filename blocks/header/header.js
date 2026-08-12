@@ -164,18 +164,55 @@ export default async function decorate(block) {
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
-  // top utility bar (dark): Sign In + language selector, matching wknd.site
+  // top utility bar (dark): Sign In + language selector, matching wknd.site.
+  // The language menu is grouped by country, mirroring the source locales.
+  const LANGUAGES = [
+    { country: 'United States', items: [{ label: 'en-US', href: '/us/en' }, { label: 'es-US', href: '/us/es' }] },
+    { country: 'Canada', items: [{ label: 'en-CA', href: '/ca/en' }, { label: 'fr-CA', href: '/ca/fr' }] },
+    { country: 'Switzerland', items: [{ label: 'de-CH', href: '/ch/de' }, { label: 'fr-CH', href: '/ch/fr' }, { label: 'it-CH', href: '/ch/it' }] },
+    { country: 'Germany', items: [{ label: 'de-DE', href: '/de/de' }] },
+    { country: 'France', items: [{ label: 'fr-FR', href: '/fr/fr' }] },
+    { country: 'Spain', items: [{ label: 'es-ES', href: '/es/es' }] },
+    { country: 'Italy', items: [{ label: 'it-IT', href: '/it/it' }] },
+  ];
+
+  const menuMarkup = LANGUAGES.map((group) => `
+    <li class="nav-lang-group">
+      <span class="nav-lang-country">${group.country}</span>
+      <ul>${group.items.map((it) => `<li><a href="${it.href}">${it.label}</a></li>`).join('')}</ul>
+    </li>`).join('');
+
   const topBar = document.createElement('div');
   topBar.className = 'nav-utility';
   topBar.innerHTML = `
     <div class="nav-utility-inner">
       <a class="nav-signin" href="#sign-in">Sign In</a>
-      <button type="button" class="nav-lang" aria-haspopup="true" aria-expanded="false">
-        <span class="nav-lang-flag" aria-hidden="true">🇺🇸</span>
-        <span class="nav-lang-label">EN-US</span>
-        <span class="nav-lang-caret" aria-hidden="true"></span>
-      </button>
+      <div class="nav-lang">
+        <button type="button" class="nav-lang-toggle" aria-haspopup="true" aria-expanded="false">
+          <span class="nav-lang-flag" aria-hidden="true">🇺🇸</span>
+          <span class="nav-lang-label">EN-US</span>
+          <span class="nav-lang-caret" aria-hidden="true"></span>
+        </button>
+        <ul class="nav-lang-menu" hidden>${menuMarkup}</ul>
+      </div>
     </div>`;
+
+  const langToggle = topBar.querySelector('.nav-lang-toggle');
+  const langMenu = topBar.querySelector('.nav-lang-menu');
+  const setLangOpen = (open) => {
+    langToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    langMenu.hidden = !open;
+  };
+  langToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setLangOpen(langToggle.getAttribute('aria-expanded') !== 'true');
+  });
+  document.addEventListener('click', (e) => {
+    if (!topBar.querySelector('.nav-lang').contains(e.target)) setLangOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape') setLangOpen(false);
+  });
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
