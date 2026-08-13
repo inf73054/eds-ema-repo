@@ -189,19 +189,22 @@ export default async function decorate(block) {
 
   // top utility bar (dark): Sign In + language selector, matching wknd.site.
   // The language menu is grouped by country, mirroring the source locales.
+  // Flag SVGs live in /icons/flags/<code>.svg (committed assets — emoji flags
+  // don't render on Windows, so real images are used instead).
+  const flag = (code) => `<span class="nav-lang-flag" style="background-image:url('/icons/flags/${code}.svg')" aria-hidden="true"></span>`;
   const LANGUAGES = [
-    { country: 'United States', flag: '🇺🇸', items: [{ label: 'en-US', href: '/us/en' }, { label: 'es-US', href: '/us/es' }] },
-    { country: 'Canada', flag: '🇨🇦', items: [{ label: 'en-CA', href: '/ca/en' }, { label: 'fr-CA', href: '/ca/fr' }] },
-    { country: 'Switzerland', flag: '🇨🇭', items: [{ label: 'de-CH', href: '/ch/de' }, { label: 'fr-CH', href: '/ch/fr' }, { label: 'it-CH', href: '/ch/it' }] },
-    { country: 'Germany', flag: '🇩🇪', items: [{ label: 'de-DE', href: '/de/de' }] },
-    { country: 'France', flag: '🇫🇷', items: [{ label: 'fr-FR', href: '/fr/fr' }] },
-    { country: 'Spain', flag: '🇪🇸', items: [{ label: 'es-ES', href: '/es/es' }] },
-    { country: 'Italy', flag: '🇮🇹', items: [{ label: 'it-IT', href: '/it/it' }] },
+    { country: 'United States', flag: 'us', items: [{ label: 'en-US', href: '/us/en' }, { label: 'es-US', href: '/us/es' }] },
+    { country: 'Canada', flag: 'ca', items: [{ label: 'en-CA', href: '/ca/en' }, { label: 'fr-CA', href: '/ca/fr' }] },
+    { country: 'Switzerland', flag: 'ch', items: [{ label: 'de-CH', href: '/ch/de' }, { label: 'fr-CH', href: '/ch/fr' }, { label: 'it-CH', href: '/ch/it' }] },
+    { country: 'Germany', flag: 'de', items: [{ label: 'de-DE', href: '/de/de' }] },
+    { country: 'France', flag: 'fr', items: [{ label: 'fr-FR', href: '/fr/fr' }] },
+    { country: 'Spain', flag: 'es', items: [{ label: 'es-ES', href: '/es/es' }] },
+    { country: 'Italy', flag: 'it', items: [{ label: 'it-IT', href: '/it/it' }] },
   ];
 
   const menuMarkup = LANGUAGES.map((group) => `
     <li class="nav-lang-group">
-      <span class="nav-lang-country"><span class="nav-lang-country-flag" aria-hidden="true">${group.flag}</span>${group.country}</span>
+      <span class="nav-lang-country">${flag(group.flag)}${group.country}</span>
       <ul>${group.items.map((it) => `<li><a href="${it.href}">${it.label}</a></li>`).join('')}</ul>
     </li>`).join('');
 
@@ -212,7 +215,7 @@ export default async function decorate(block) {
       <a class="nav-signin" href="#sign-in">Sign In</a>
       <div class="nav-lang">
         <button type="button" class="nav-lang-toggle" aria-haspopup="true" aria-expanded="false">
-          <span class="nav-lang-flag" aria-hidden="true">🇺🇸</span>
+          ${flag('us')}
           <span class="nav-lang-label">EN-US</span>
           <span class="nav-lang-caret" aria-hidden="true"></span>
         </button>

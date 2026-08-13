@@ -4,6 +4,7 @@ header .nav-wrapper {
   width: 100%;
   z-index: 2;
   position: fixed;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 25%);
 }
 
 /* top utility bar (dark): Sign In + language selector — matches wknd.site */
@@ -56,9 +57,15 @@ header .nav-utility .nav-lang-toggle {
   cursor: pointer;
 }
 
+/* flag image chip — small country flag rendered from /icons/flags/*.svg */
 header .nav-utility .nav-lang-flag {
-  font-size: 15px;
-  line-height: 1;
+  display: inline-block;
+  width: 22px;
+  height: 15px;
+  flex-shrink: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 header .nav-utility .nav-lang-caret {
@@ -116,9 +123,10 @@ header .nav-utility .nav-lang-country {
   color: #ebebeb;
 }
 
-header .nav-utility .nav-lang-country-flag {
-  font-size: 16px;
-  line-height: 1;
+/* dropdown flags render a touch larger than the toggle chip */
+header .nav-utility .nav-lang-country .nav-lang-flag {
+  width: 26px;
+  height: 17px;
 }
 
 @media (width >= 900px) {
