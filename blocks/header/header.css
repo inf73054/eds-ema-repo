@@ -182,11 +182,17 @@ header nav[aria-expanded='true'] {
     justify-content: space-between;
     gap: 0 32px;
     max-width: 1264px;
+
+    /* taller white nav bar with generous padding around the logo, matching
+       wknd.site (its white bar is ~150px); the <header> is auto-height so this
+       cannot overlap the content below */
+    height: auto;
+    min-height: 150px;
     padding: 0 32px;
   }
 
   header nav[aria-expanded='true'] {
-    min-height: 0;
+    min-height: 150px;
     overflow: visible;
   }
 }
