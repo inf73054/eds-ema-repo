@@ -38,8 +38,8 @@
   --heading-font-size-s: 18px;
   --heading-font-size-xs: 16px;
 
-  /* nav height — tall white bar with generous padding, matching wknd.site */
-  --nav-height: 128px;
+  /* nav height — the white nav row height (dark utility bar sits above it) */
+  --nav-height: 96px;
 }
 
 /* fallback fonts */

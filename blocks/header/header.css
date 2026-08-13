@@ -170,6 +170,13 @@ header nav[aria-expanded='true'] {
     position: relative;
   }
 
+  /* the nav-wrapper (dark utility bar + white nav row) is in flow on desktop,
+     so let the reserved <header> box size to its full content instead of the
+     fixed --nav-height (which would clip the utility bar and overlap content) */
+  header {
+    height: auto;
+  }
+
   header nav {
     display: flex;
     justify-content: space-between;
