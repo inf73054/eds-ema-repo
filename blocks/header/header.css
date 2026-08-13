@@ -268,14 +268,15 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
   }
 }
 
-/* brand — large bold WKND wordmark to match the live site logo (~36px tall) */
+/* brand — tall, narrow, heavy WKND wordmark (condensed) to match the live logo */
 header .nav-brand {
   grid-area: brand;
   flex-basis: auto;
-  font-size: 32px;
-  font-weight: 900;
+  font-family: roboto-condensed, "Arial Narrow", var(--body-font-family);
+  font-size: 40px;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
