@@ -204,8 +204,11 @@ export default async function decorate(block) {
 
   const menuMarkup = LANGUAGES.map((group) => `
     <li class="nav-lang-group">
-      <span class="nav-lang-country">${flag(group.flag)}${group.country}</span>
-      <ul>${group.items.map((it) => `<li><a href="${it.href}">${it.label}</a></li>`).join('')}</ul>
+      ${flag(group.flag)}
+      <div class="nav-lang-col">
+        <span class="nav-lang-country">${group.country}</span>
+        <ul>${group.items.map((it) => `<li><a href="${it.href}">${it.label}</a></li>`).join('')}</ul>
+      </div>
     </li>`).join('');
 
   const topBar = document.createElement('div');
