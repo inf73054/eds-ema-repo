@@ -151,6 +151,29 @@ export default async function decorate(block) {
     });
   }
 
+  // tools: replace the bare search icon-link with a real search box (input +
+  // magnifier) that navigates to the search page, matching wknd.site.
+  const navTools = nav.querySelector('.nav-tools');
+  if (navTools) {
+    const searchLink = navTools.querySelector('a');
+    const searchPath = (searchLink && searchLink.getAttribute('href')) || '/us/en/search';
+    navTools.innerHTML = '';
+    const form = document.createElement('form');
+    form.className = 'nav-search';
+    form.setAttribute('role', 'search');
+    form.setAttribute('action', searchPath);
+    form.innerHTML = `
+      <span class="nav-search-icon" aria-hidden="true"></span>
+      <input type="search" name="q" placeholder="SEARCH" aria-label="Search">`;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = form.querySelector('input').value.trim();
+      const url = q ? `${searchPath}?q=${encodeURIComponent(q)}` : searchPath;
+      window.location.assign(url);
+    });
+    navTools.append(form);
+  }
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
@@ -167,18 +190,18 @@ export default async function decorate(block) {
   // top utility bar (dark): Sign In + language selector, matching wknd.site.
   // The language menu is grouped by country, mirroring the source locales.
   const LANGUAGES = [
-    { country: 'United States', items: [{ label: 'en-US', href: '/us/en' }, { label: 'es-US', href: '/us/es' }] },
-    { country: 'Canada', items: [{ label: 'en-CA', href: '/ca/en' }, { label: 'fr-CA', href: '/ca/fr' }] },
-    { country: 'Switzerland', items: [{ label: 'de-CH', href: '/ch/de' }, { label: 'fr-CH', href: '/ch/fr' }, { label: 'it-CH', href: '/ch/it' }] },
-    { country: 'Germany', items: [{ label: 'de-DE', href: '/de/de' }] },
-    { country: 'France', items: [{ label: 'fr-FR', href: '/fr/fr' }] },
-    { country: 'Spain', items: [{ label: 'es-ES', href: '/es/es' }] },
-    { country: 'Italy', items: [{ label: 'it-IT', href: '/it/it' }] },
+    { country: 'United States', flag: '🇺🇸', items: [{ label: 'en-US', href: '/us/en' }, { label: 'es-US', href: '/us/es' }] },
+    { country: 'Canada', flag: '🇨🇦', items: [{ label: 'en-CA', href: '/ca/en' }, { label: 'fr-CA', href: '/ca/fr' }] },
+    { country: 'Switzerland', flag: '🇨🇭', items: [{ label: 'de-CH', href: '/ch/de' }, { label: 'fr-CH', href: '/ch/fr' }, { label: 'it-CH', href: '/ch/it' }] },
+    { country: 'Germany', flag: '🇩🇪', items: [{ label: 'de-DE', href: '/de/de' }] },
+    { country: 'France', flag: '🇫🇷', items: [{ label: 'fr-FR', href: '/fr/fr' }] },
+    { country: 'Spain', flag: '🇪🇸', items: [{ label: 'es-ES', href: '/es/es' }] },
+    { country: 'Italy', flag: '🇮🇹', items: [{ label: 'it-IT', href: '/it/it' }] },
   ];
 
   const menuMarkup = LANGUAGES.map((group) => `
     <li class="nav-lang-group">
-      <span class="nav-lang-country">${group.country}</span>
+      <span class="nav-lang-country"><span class="nav-lang-country-flag" aria-hidden="true">${group.flag}</span>${group.country}</span>
       <ul>${group.items.map((it) => `<li><a href="${it.href}">${it.label}</a></li>`).join('')}</ul>
     </li>`).join('');
 
