@@ -102,8 +102,12 @@ header .nav-utility .nav-lang-menu[hidden] {
   display: none;
 }
 
-/* each country row: flag + country label + language codes, divided by hairlines */
+/* each country row: flag column (left) beside a stacked country label + codes,
+   with the flag vertically centred against the whole block — matches wknd.site */
 header .nav-utility .nav-lang-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   padding: 16px 24px;
 }
 
@@ -111,11 +115,13 @@ header .nav-utility .nav-lang-group + .nav-lang-group {
   border-top: 1px solid rgb(255 255 255 / 12%);
 }
 
-header .nav-utility .nav-lang-country {
+header .nav-utility .nav-lang-col {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  flex-direction: column;
+  gap: 6px;
+}
+
+header .nav-utility .nav-lang-country {
   font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
@@ -124,7 +130,7 @@ header .nav-utility .nav-lang-country {
 }
 
 /* dropdown flags render a touch larger than the toggle chip */
-header .nav-utility .nav-lang-country .nav-lang-flag {
+header .nav-utility .nav-lang-group > .nav-lang-flag {
   width: 26px;
   height: 17px;
 }
