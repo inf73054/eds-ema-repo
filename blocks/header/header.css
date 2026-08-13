@@ -344,6 +344,12 @@ header nav .nav-sections ul > li > ul > li {
     display: block;
     visibility: visible;
     white-space: nowrap;
+
+    /* group the nav links over on the right, next to the search box (not
+       stretched/left-aligned after the logo), matching wknd.site */
+    flex: 0 1 auto;
+    margin-left: auto;
+    margin-right: 40px;
   }
 
   header nav[aria-expanded='true'] .nav-sections {
