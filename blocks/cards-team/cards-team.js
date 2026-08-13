@@ -21,6 +21,20 @@ export default function decorate(block) {
       createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]),
     );
   });
+
+  // Social links render as icon-only buttons (matches wknd.site). Detect the
+  // platform from the href/text, tag the link, and expose the label to screen
+  // readers via aria-label while hiding the visible text.
+  const platforms = ['facebook', 'twitter', 'instagram'];
+  ul.querySelectorAll('.cards-team-card-body p a').forEach((a) => {
+    const hint = `${a.getAttribute('href') || ''} ${a.textContent || ''}`.toLowerCase();
+    const platform = platforms.find((p) => hint.includes(p) || hint.includes(p.slice(0, 5)));
+    if (platform) {
+      a.classList.add('cards-team-social', `cards-team-social-${platform}`);
+      if (!a.getAttribute('aria-label')) a.setAttribute('aria-label', platform);
+    }
+  });
+
   block.textContent = '';
   block.append(ul);
 }

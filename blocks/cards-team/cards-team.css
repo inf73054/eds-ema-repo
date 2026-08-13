@@ -63,38 +63,59 @@
   letter-spacing: 0.02em;
 }
 
-/* Social links row: centered row of dark icon-style buttons */
-.cards-team .cards-team-card-body p {
-  display: flex;
+/* Social links row: white icons inside a centered dark bar (matches wknd.site) */
+.cards-team .cards-team-card-body p:has(a.cards-team-social) {
+  display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 4px;
-  margin: 16px 0 0;
+  gap: 16px;
+  margin: 20px auto 0;
+  padding: 6px 24px;
+  background-color: var(--dark-color);
 }
 
 .cards-team .cards-team-card-body p a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 48px;
-  min-height: 40px;
-  padding: 0 14px;
-  background-color: var(--text-color);
+  width: 48px;
+  height: 48px;
   color: var(--background-color);
-  font-family: var(--body-font-family);
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   text-decoration: none;
-  border-radius: var(--radius-pill);
 }
 
-.cards-team .cards-team-card-body p a:hover,
-.cards-team .cards-team-card-body p a:focus {
-  background-color: var(--link-hover-color);
-  color: var(--background-color);
+/* icon-only social buttons: hide the text label, show the platform glyph */
+.cards-team .cards-team-card-body p a.cards-team-social {
+  font-size: 0;
+  line-height: 0;
+}
+
+.cards-team .cards-team-card-body p a.cards-team-social::before {
+  content: '';
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-color: var(--background-color);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+.cards-team .cards-team-card-body p a.cards-team-social-facebook::before {
+  mask-image: url('/icons/facebook.svg');
+}
+
+.cards-team .cards-team-card-body p a.cards-team-social-twitter::before {
+  mask-image: url('/icons/twitter.svg');
+}
+
+.cards-team .cards-team-card-body p a.cards-team-social-instagram::before {
+  mask-image: url('/icons/instagram.svg');
+}
+
+.cards-team .cards-team-card-body p a:hover::before,
+.cards-team .cards-team-card-body p a:focus::before {
+  opacity: 0.7;
 }
 
 /* Tablet: two columns */
