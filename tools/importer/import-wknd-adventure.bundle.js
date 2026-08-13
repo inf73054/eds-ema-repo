@@ -42,16 +42,16 @@ var CustomImportScript = (() => {
   });
 
   // tools/importer/parsers/trip-details.js
-  function parse(element, { document }) {
+  function parse(element, { document: document2 }) {
     const items = [...element.querySelectorAll(".cmp-contentfragment__element")];
     const rows = [];
     items.forEach((item) => {
       const key = item.querySelector(".cmp-contentfragment__element-title, dt");
       const val = item.querySelector(".cmp-contentfragment__element-value, dd");
       if (!key && !val) return;
-      const kDiv = document.createElement("div");
+      const kDiv = document2.createElement("div");
       kDiv.textContent = key ? key.textContent.trim() : "";
-      const vDiv = document.createElement("div");
+      const vDiv = document2.createElement("div");
       vDiv.textContent = val ? val.textContent.trim() : "";
       rows.push([kDiv, vDiv]);
     });
@@ -59,15 +59,15 @@ var CustomImportScript = (() => {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const head = document.createElement("div");
+    const head = document2.createElement("div");
     head.textContent = "Trip Details";
     const cells = [[head, ""], ...rows];
-    const block = WebImporter.Blocks.createBlock(document, { name: "table", cells });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "table", cells });
     element.replaceWith(block);
   }
 
   // tools/importer/parsers/tabs.js
-  function parse2(element, { document }) {
+  function parse2(element, { document: document2 }) {
     const labels = [...element.querySelectorAll(".cmp-tabs__tab")].map((t) => t.textContent.trim());
     const panels = [...element.querySelectorAll(".cmp-tabs__tabpanel")];
     if (panels.length === 0) {
@@ -77,7 +77,7 @@ var CustomImportScript = (() => {
     const cells = panels.map((panel, i) => {
       const label = labels[i] || `Tab ${i + 1}`;
       const body = panel.querySelector(".cmp-contentfragment__element-value, article, .cmp-container") || panel;
-      const content = document.createElement("div");
+      const content = document2.createElement("div");
       [...body.children].forEach((child) => {
         if (child.tagName === "H3" && child.classList.contains("cmp-contentfragment__title")) return;
         content.appendChild(child.cloneNode(true));
@@ -88,11 +88,11 @@ var CustomImportScript = (() => {
           content.appendChild(child.cloneNode(true));
         });
       }
-      const labelDiv = document.createElement("div");
+      const labelDiv = document2.createElement("div");
       labelDiv.textContent = label;
       return [labelDiv, content];
     });
-    const block = WebImporter.Blocks.createBlock(document, { name: "tabs", cells });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "tabs", cells });
     element.replaceWith(block);
   }
 
@@ -118,6 +118,17 @@ var CustomImportScript = (() => {
       ]);
       element.querySelectorAll('.cmp-carousel__actions, .cmp-carousel__action, .cmp-carousel__indicators, [class*="carousel__action"]').forEach((el) => el.remove());
       element.querySelectorAll('.cmp-carousel button, [class*="carousel"] button').forEach((btn) => btn.remove());
+      element.querySelectorAll('.cmp-carousel, [class*="carousel"]').forEach((carousel) => {
+        const imgs = [...carousel.querySelectorAll("img")];
+        if (imgs.length < 2) return;
+        const cells = imgs.map((img) => {
+          const pic = img.closest("picture") || img;
+          return [pic];
+        });
+        const block = WebImporter.Blocks.createBlock(document, { name: "carousel", cells });
+        carousel.parentNode.insertBefore(block, carousel);
+        carousel.remove();
+      });
       element.querySelectorAll('h5, [class*="sharing"], [data-cmp-is="sharing"]').forEach((el) => {
         if (/share this/i.test(el.textContent || "")) {
           const next = el.nextElementSibling;
@@ -167,12 +178,12 @@ var CustomImportScript = (() => {
       }
     });
   }
-  function findBlocksOnPage(document, template) {
+  function findBlocksOnPage(document2, template) {
     const pageBlocks = [];
     template.blocks.forEach((blockDef) => {
       if (blockDef.name.startsWith("section-")) return;
       blockDef.instances.forEach((selector) => {
-        const elements = document.querySelectorAll(selector);
+        const elements = document2.querySelectorAll(selector);
         if (elements.length === 0) {
           console.warn(`Block "${blockDef.name}" selector not found: ${selector}`);
         }
@@ -186,16 +197,16 @@ var CustomImportScript = (() => {
   }
   var import_wknd_adventure_default = {
     transform: (payload) => {
-      const { document, url, params } = payload;
-      const main = document.body;
+      const { document: document2, url, params } = payload;
+      const main = document2.body;
       executeTransformers("beforeTransform", main, payload);
-      const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
+      const pageBlocks = findBlocksOnPage(document2, PAGE_TEMPLATE);
       pageBlocks.forEach((block) => {
         if (!block.element.parentNode) return;
         const parser = parsers[block.name];
         if (parser) {
           try {
-            parser(block.element, { document, url, params });
+            parser(block.element, { document: document2, url, params });
           } catch (e) {
             console.error(`Failed to parse ${block.name} (${block.selector}):`, e);
           }
@@ -207,18 +218,18 @@ var CustomImportScript = (() => {
       const tripTable = blockTables.find((t) => firstRowText(t).startsWith("table"));
       const tabsTable = blockTables.find((t) => firstRowText(t).startsWith("tabs"));
       if (tripTable && tabsTable) {
-        tripTable.parentNode.insertBefore(document.createElement("hr"), tripTable);
-        const smd = WebImporter.Blocks.createBlock(document, {
+        tripTable.parentNode.insertBefore(document2.createElement("hr"), tripTable);
+        const smd = WebImporter.Blocks.createBlock(document2, {
           name: "Section Metadata",
           cells: [["Style", "adventure-body"]]
         });
         if (tabsTable.nextSibling) tabsTable.parentNode.insertBefore(smd, tabsTable.nextSibling);
         else tabsTable.parentNode.appendChild(smd);
       }
-      const hr = document.createElement("hr");
+      const hr = document2.createElement("hr");
       main.appendChild(hr);
-      WebImporter.rules.createMetadata(main, document);
-      WebImporter.rules.transformBackgroundImages(main, document);
+      WebImporter.rules.createMetadata(main, document2);
+      WebImporter.rules.transformBackgroundImages(main, document2);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
       const pathname = new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html$/, "");
       const slug = pathname.split("/").pop();
@@ -227,7 +238,7 @@ var CustomImportScript = (() => {
         element: main,
         path,
         report: {
-          title: document.title,
+          title: document2.title,
           template: PAGE_TEMPLATE.name,
           blocks: pageBlocks.map((b) => b.name)
         }

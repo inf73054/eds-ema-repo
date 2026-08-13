@@ -38,6 +38,22 @@ export default function transform(hookName, element, payload) {
     element.querySelectorAll('.cmp-carousel__actions, .cmp-carousel__action, .cmp-carousel__indicators, [class*="carousel__action"]').forEach((el) => el.remove());
     element.querySelectorAll('.cmp-carousel button, [class*="carousel"] button').forEach((btn) => btn.remove());
 
+    // Hero carousel: the source .cmp-carousel holds the slide images. When it has
+    // 2+ images, convert it into an EDS carousel block table (one row per slide,
+    // each cell holding the image) so it renders as a slideshow. A single image
+    // is left inline as a full-bleed banner.
+    element.querySelectorAll('.cmp-carousel, [class*="carousel"]').forEach((carousel) => {
+      const imgs = [...carousel.querySelectorAll('img')];
+      if (imgs.length < 2) return;
+      const cells = imgs.map((img) => {
+        const pic = img.closest('picture') || img;
+        return [pic];
+      });
+      const block = WebImporter.Blocks.createBlock(document, { name: 'carousel', cells });
+      carousel.parentNode.insertBefore(block, carousel);
+      carousel.remove();
+    });
+
     // Remove the dynamic "Share this Adventure" widget (heading + share buttons).
     element.querySelectorAll('h5, [class*="sharing"], [data-cmp-is="sharing"]').forEach((el) => {
       if (/share this/i.test(el.textContent || '')) {
