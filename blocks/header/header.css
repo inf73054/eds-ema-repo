@@ -74,19 +74,19 @@ header .nav-utility .nav-lang-toggle[aria-expanded='true'] .nav-lang-caret {
   transform: translateY(1px) rotate(-135deg);
 }
 
-/* language dropdown menu */
+/* language dropdown menu — dark panel matching wknd.site */
 header .nav-utility .nav-lang-menu {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 100%;
   right: 0;
   z-index: 3;
-  min-width: 180px;
+  min-width: 280px;
   margin: 0;
-  padding: 12px 0;
+  padding: 0;
   list-style: none;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 20%);
+  background-color: var(--dark-color);
+  color: #ebebeb;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 30%);
   text-transform: none;
   letter-spacing: normal;
 }
@@ -95,20 +95,30 @@ header .nav-utility .nav-lang-menu[hidden] {
   display: none;
 }
 
+/* each country row: flag + country label + language codes, divided by hairlines */
+header .nav-utility .nav-lang-group {
+  padding: 16px 24px;
+}
+
 header .nav-utility .nav-lang-group + .nav-lang-group {
-  margin-top: 8px;
-  border-top: 1px solid var(--light-color);
-  padding-top: 8px;
+  border-top: 1px solid rgb(255 255 255 / 12%);
 }
 
 header .nav-utility .nav-lang-country {
-  display: block;
-  padding: 4px 20px;
-  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #767676;
+  letter-spacing: 0.04em;
+  color: #ebebeb;
+}
+
+header .nav-utility .nav-lang-country-flag {
+  font-size: 16px;
+  line-height: 1;
 }
 
 @media (width >= 900px) {
@@ -250,13 +260,15 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
   }
 }
 
-/* brand */
+/* brand — large bold WKND wordmark to match the live site logo (~36px tall) */
 header .nav-brand {
   grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
-  font-weight: 700;
+  flex-basis: auto;
+  font-size: 32px;
+  font-weight: 900;
   line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 header nav .nav-brand img {
@@ -400,30 +412,84 @@ header nav .nav-sections a:any-link:focus-visible {
   color: var(--text-color);
 }
 
-/* search tool icon */
-header nav .nav-tools .icon-search,
-header nav .nav-tools .icon svg {
-  width: 22px;
-  height: 22px;
+/* search box — light grey field with magnifier + uppercase placeholder (wknd.site) */
+header nav .nav-search {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-/* language dropdown menu list + links (kept after nav rules for specificity order) */
+header nav .nav-search-icon {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  background-color: #202020;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-mask: url('/icons/search.svg') no-repeat center / contain;
+  mask: url('/icons/search.svg') no-repeat center / contain;
+}
+
+header nav .nav-search input[type='search'] {
+  width: 224px;
+  height: 42px;
+  margin: 0;
+  padding: 1px 16px 1px 36px;
+  border: 0;
+  border-radius: 0;
+  background-color: rgb(235 235 235 / 54%);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  appearance: none;
+}
+
+header nav .nav-search input[type='search']::placeholder {
+  color: #767676;
+  text-transform: uppercase;
+  opacity: 1;
+}
+
+header nav .nav-search input[type='search']:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: -2px;
+}
+
+/* language codes sit inline on one row, divided by hairlines (matches source) */
 header .nav-utility .nav-lang-menu ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+header .nav-utility .nav-lang-menu ul > li + li {
+  border-left: 1px solid rgb(255 255 255 / 30%);
+}
+
 /* stylelint-disable-next-line no-descending-specificity */
 header .nav-utility .nav-lang-menu ul a {
   display: block;
-  padding: 6px 20px;
-  color: var(--text-color);
+  padding: 0 12px;
+  color: #f7f7f7;
   font-size: 14px;
+  text-transform: uppercase;
   text-decoration: none;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 header .nav-utility .nav-lang-menu ul a:hover,
 header .nav-utility .nav-lang-menu ul a:focus-visible {
-  background-color: var(--accent-color);
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+header .nav-utility .nav-lang-menu ul > li:first-child a {
+  padding-left: 0;
 }
