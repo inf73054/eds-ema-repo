@@ -82,6 +82,11 @@
   line-height: 1.5;
   text-transform: uppercase;
   color: #696969;
+
+  /* truncate to a single line with an ellipsis, matching wknd.site */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 @media (width >= 600px) {
